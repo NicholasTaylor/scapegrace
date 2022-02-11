@@ -17,9 +17,12 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->string('title', 200);
-            $table->string('slug', 100);
+            $table->string('slug', 250)->unique();
             $table->string('excerpt', 200)->nullable();
             $table->text('body')->nullable();
+            $table->bigInteger('category_id')->nullable();
+            $table->text('tags')->nullable();
+            $table->timestamp('published_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
         });
     }
