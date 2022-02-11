@@ -64,5 +64,7 @@
                         <div>{{ $error }}</div>
                     @endforeach
                 @endif
+                <script src="{{ asset('js/ckeditor.js') }}"></script>
+                <script src="{{ asset('js/wysiwyg.js') }}"></script>
     </body>
 </html>
