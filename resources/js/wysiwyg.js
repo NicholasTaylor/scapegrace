@@ -1,7 +1,9 @@
+const bodyField = document.querySelector('#body');
+
 ClassicEditor
-    .create( document.querySelector('#body'))
+    .create( bodyField )
     .then( body => {
-        console.log(body);
+        body.setData(bodyField.getAttribute('value'))
     })
     .catch( error=> {
         console.error(error);

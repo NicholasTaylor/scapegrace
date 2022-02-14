@@ -2,6 +2,12 @@
 <html>
     <?php 
         use Carbon\Carbon;
+
+        if (isset($post->category_id)):
+            $category_id_match = $post->category_id;
+        else:
+            $category_id_match = '';
+        endif;
     ?>
     <head>
     </head>
@@ -15,21 +21,21 @@
                     <label for="title">
                         {{ __('Title') }}
                     </label>
-                    <input id="title" type="text" name="title" value="{{ old('title') }}" required autofocus />
+                    <input id="title" type="text" name="title" value="{{ isset($post) ? $post->title : old('title') }}" required autofocus />
                 </div>
                 
                 <div>
                     <label for="excerpt">
                         {{ __('Excerpt') }}
                     </label>
-                    <input id="excerpt" type="text" name="excerpt" value="{{ old('excerpt') }}" />
+                    <input id="excerpt" type="text" name="excerpt" value="{{ isset($post) ? $post->excerpt : old('excerpt') }}" />
                 </div>
                 
                 <div>
                     <label for="body">
                         {{ __('Body') }}
                     </label>
-                    <textarea id="body" name="body" value="{{ old('body') }}" />
+                    <textarea id="body" name="body" value="{{ isset($post) ? $post->body : old('body') }}" />
                     </textarea>
                 </div>
                 
@@ -41,7 +47,7 @@
                         <select id="category_id" name="category_id">
                             <option value="">None</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ ucwords($category->name) }}</option>
+                                <option value="{{ $category->id }}"{{ $category_id_match == $category->id ? ' selected' : ''  }}>{{ ucwords($category->name) }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -50,7 +56,7 @@
                     <label for="published_at">
                         {{ __('Publish Date') }}
                     </label>
-                    <input id="published_at" type="datetime-local" name="published_at" value="{{ Carbon::now()->toDateTimeString(); }}" required />
+                    <input id="published_at" type="datetime-local" name="published_at" value="{{ isset($post) ? $post->published_at : $currentTime }}" required />
                 </div>
 
                 <div>
