@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
     <?php 
-        use Carbon\Carbon;
-
         if (isset($post->category_id)):
             $category_id_match = $post->category_id;
         else:
@@ -12,7 +10,7 @@
     <head>
     </head>
     <body>
-        <form method="POST" action="{{ route('post.firstSave') }}" />
+        <form method="POST" action="{{ isset($post) ? route('post.update', $post->id) : route('post.store') }}" />
             @csrf
                 <h1>
                     Create Post
@@ -70,7 +68,8 @@
                         <div>{{ $error }}</div>
                     @endforeach
                 @endif
-                <script src="{{ asset('js/ckeditor.js') }}"></script>
-                <script src="{{ asset('js/wysiwyg.js') }}"></script>
+        </form>
+        <script src="{{ asset('js/ckeditor.js') }}"></script>
+        <script src="{{ asset('js/wysiwyg.js') }}"></script>
     </body>
 </html>

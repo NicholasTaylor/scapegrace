@@ -23,21 +23,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        if ( !is_null($request['category_id'])):
-            $request['category_id'] = intval($request['category_id']);
-        endif;
-        $request->validate([
-            'title' => ['required', 'string', 'max:200'],
-            'excerpt' => ['string', 'max:100', 'nullable'],
-            'body' => ['string', 'nullable'],
-            'category_id' => ['integer', 'nullable'],
-            'published_at' => ['required', 'date'],
-        ]);
-
-        $request['user_id'] = auth()->user()->id;
-
-        $post = Post::create($request->all());
-
+        $post = Post::create($this->validatePost($request)->all());
         return redirect(RouteServiceProvider::ADMIN);
 
     }
@@ -54,13 +40,48 @@ class PostController extends Controller
         ]);
     }
 
+    public function update(Request $request, $id)
+    {
+        $post = Post::where('id',$id)->get()[0];
+        $post->update($this->validatePost($request)->all());
+        return redirect(RouteServiceProvider::ADMIN);
+    }
+
     public function index()
     {
         $posts = Post::where('user_id',auth()->user()->id)->take(10)->get();
         return view('auth.dashboard',[
             'posts' => $posts
         ]);
+    }
 
+    public function delete($id)
+    {
+        $post = Post::where('id',$id)->get();
+        return view('admin.delete',[
+            'post' => $post[0]
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        Post::where('id',$id)->get()[0]->delete();
+        return redirect(RouteServiceProvider::ADMIN);
+    }
+
+    protected function validatePost($request){
+        if ( !is_null($request['category_id'])):
+            $request['category_id'] = intval($request['category_id']);
+        endif;
+        $request->validate([
+            'title' => ['required', 'string', 'max:200'],
+            'excerpt' => ['string', 'max:100', 'nullable'],
+            'body' => ['string', 'nullable'],
+            'category_id' => ['integer', 'nullable'],
+            'published_at' => ['required', 'date'],
+        ]);
+        $request['user_id'] = auth()->user()->id;
+        return $request;
     }
 
 }
