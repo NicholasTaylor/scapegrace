@@ -1,12 +1,18 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/admin/', [PostController::class, 'index'])
+Route::get('/admin/', [AdminController::class, 'index'])
     ->middleware('auth')
-    ->name('post.index');
+    ->name('admin.index');
+
+Route::get('/admin/categories', [CategoryController::class, 'index'])
+    ->middleware('auth')
+    ->name('category.index');
 
 Route::get('/admin/create-post', [PostController::class, 'create'])
     ->middleware('auth')

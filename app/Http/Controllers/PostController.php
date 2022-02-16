@@ -49,7 +49,8 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::where('user_id',auth()->user()->id)->take(10)->get();
+        $posts = Post::where('user_id',auth()->user()->id)->take(5)->get();
+        $categories = Category::get();
         return view('auth.dashboard',[
             'posts' => $posts
         ]);

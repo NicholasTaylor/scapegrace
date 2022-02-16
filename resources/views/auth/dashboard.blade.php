@@ -3,6 +3,17 @@
     <head>
     </head>
     <body>
+        <nav>
+            <div>
+                <a href="">Posts</a>
+            </div>
+            <div>
+                <a href="{{ route('category.index') }}">Categories</a>
+            </div>
+            <div>
+                <a href="">Profile</a>
+            </div>
+        </nav>
         <div>
             <h1>
                 {{ __('Dashboard') }}
@@ -16,7 +27,7 @@
                 </li>
             </ul>
             <h1>
-                Your Posts
+                Your Recent Posts
             </h1>
             <div
                 style="display:flex; flex-direction: row; flex-wrap: no-wrap;"
