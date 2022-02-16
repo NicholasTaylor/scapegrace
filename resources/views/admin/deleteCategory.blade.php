@@ -3,34 +3,27 @@
     <head>
     </head>
     <body>
-        <form method="POST" action="{{ route('post.destroy', $post->id) }}" />
+        <form method="POST" action="{{ route('category.destroy', $category->id) }}" />
             @method('DELETE')
             @csrf
                 <h1>
-                    Delete Post?
+                    Delete Category?
                 </h1>
                 <div>
-                    Are you sure you want to delete this post?
+                    Are you sure you want to delete this category? This could impact multiple articles.
                 </div>
                 <div>
-                    <strong>{{ _('Title') }}</strong>
+                    <strong>{{ _('Name') }}</strong>
                 </div>
                 <div>
-                    {{ $post->title }}"
+                    {{ $category->name }}"
                 </div>
                 <div>
-                    <strong>{{ _('Excerpt') }}</strong>
+                    <strong>{{ _('Description') }}</strong>
                 </div>
                 <div>
-                    {{ $post->excerpt }}"
+                    {{ $category->description }}"
                 </div>
-                <div>
-                    <strong>{{ _('Body') }}</strong>
-                </div>
-                <div>
-                    {!! $post->body !!}
-                </div>
-                <input type="hidden" name="_method" value="delete">
                 <div>
                     <button>
                         {{ __('Delete') }}

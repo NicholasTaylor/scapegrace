@@ -3,6 +3,11 @@
     <head>
     </head>
     <body>
+        <a
+            href="{{ route('category.create') }}"
+        >
+            Create New Category
+        </a>
         <h1>
             Your Categories
         </h1>
@@ -13,12 +18,12 @@
             <div
                 style="flex: 2 1 33%"
             >
-                <strong>{{ _('Title') }}</strong>
+                <strong>{{ _('Category Name') }}</strong>
             </div>
             <div
                 style="flex: 2 1 33%"
             >
-                <strong>{{ _('Excerpt') }}</strong>
+                <strong>{{ _('Description') }}</strong>
             </div>
             <div
                 style="flex: 1 1 17%"

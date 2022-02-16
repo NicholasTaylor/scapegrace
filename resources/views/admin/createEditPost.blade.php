@@ -10,7 +10,10 @@
     <head>
     </head>
     <body>
-        <form method="POST" action="{{ isset($post) ? route('post.update', $post->id) : route('post.store') }}" />
+        <form method="POST" action="{{ Route::currentRouteName() == 'post.edit' ? route('post.update', $post->id) : route('post.store') }}" />
+            @if (Route::currentRouteName() == 'post.edit')
+                @method('PATCH')
+            @endif
             @csrf
                 <h1>
                     Create Post
@@ -19,21 +22,21 @@
                     <label for="title">
                         {{ __('Title') }}
                     </label>
-                    <input id="title" type="text" name="title" value="{{ isset($post) ? $post->title : old('title') }}" required autofocus />
+                    <input id="title" type="text" name="title" value="{{ Route::currentRouteName() == 'post.edit' ? $post->title : old('title') }}" required autofocus />
                 </div>
                 
                 <div>
                     <label for="excerpt">
                         {{ __('Excerpt') }}
                     </label>
-                    <input id="excerpt" type="text" name="excerpt" value="{{ isset($post) ? $post->excerpt : old('excerpt') }}" />
+                    <input id="excerpt" type="text" name="excerpt" value="{{ Route::currentRouteName() == 'post.edit' ? $post->excerpt : old('excerpt') }}" />
                 </div>
                 
                 <div>
                     <label for="body">
                         {{ __('Body') }}
                     </label>
-                    <textarea id="body" name="body" value="{{ isset($post) ? $post->body : old('body') }}" />
+                    <textarea id="body" name="body" value="{{ Route::currentRouteName() == 'post.edit' ? $post->body : old('body') }}" />
                     </textarea>
                 </div>
                 
@@ -54,7 +57,7 @@
                     <label for="published_at">
                         {{ __('Publish Date') }}
                     </label>
-                    <input id="published_at" type="datetime-local" name="published_at" value="{{ isset($post) ? $post->published_at : $currentTime }}" required />
+                    <input id="published_at" type="datetime-local" name="published_at" value="{{ Route::currentRouteName() == 'post.edit' ? $post->published_at : $currentTime }}" required />
                 </div>
 
                 <div>

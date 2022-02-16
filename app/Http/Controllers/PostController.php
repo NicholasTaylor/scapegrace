@@ -15,7 +15,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $currentTime = Carbon::now()->toDateTimeString();
-        return view('admin.post',[
+        return view('admin.createEditPost',[
             'categories' => $categories,
             'currentTime' => $currentTime
         ]);
@@ -25,7 +25,6 @@ class PostController extends Controller
     {
         $post = Post::create($this->validatePost($request)->all());
         return redirect(RouteServiceProvider::ADMIN);
-
     }
 
     public function edit($id)
@@ -33,7 +32,7 @@ class PostController extends Controller
         $categories = Category::all();
         $currentTime = Carbon::now()->toDateTimeString();
         $post = Post::where('id',$id)->get();
-        return view('admin.post',[
+        return view('admin.createEditPost',[
             'categories' => $categories,
             'currentTime' => $currentTime,
             'post' => $post[0]
@@ -59,7 +58,7 @@ class PostController extends Controller
     public function delete($id)
     {
         $post = Post::where('id',$id)->get();
-        return view('admin.delete',[
+        return view('admin.deletePost',[
             'post' => $post[0]
         ]);
     }
