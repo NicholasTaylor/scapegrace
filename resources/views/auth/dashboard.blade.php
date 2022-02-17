@@ -5,7 +5,7 @@
     <body>
         <nav>
             <div>
-                <a href="">Posts</a>
+                <a href="">Articles</a>
             </div>
             <div>
                 <a href="{{ route('category.index') }}">Categories</a>
@@ -23,11 +23,11 @@
             </h2>
             <ul>
                 <li>
-                    <a href="{{ route('post.create') }}">Create a post</a>
+                    <a href="{{ route('article.create') }}">Create a article</a>
                 </li>
             </ul>
             <h1>
-                Your Recent Posts
+                Your Recent Articles
             </h1>
             <div
                 style="display:flex; flex-direction: row; flex-wrap: no-wrap;"
@@ -53,29 +53,29 @@
                     
                 </div>
             </div>
-            @foreach ($posts as $post)
+            @foreach ($articles as $article)
                 <div
                     style="display:flex; flex-direction: row; flex-wrap: no-wrap;"
                 >
                     <div
                         style="flex: 2 1 33%"
                     >
-                        {{ $post->title }}
+                        {{ $article->title }}
                     </div>
                     <div
                         style="flex: 2 1 33%"
                     >
-                        {{ $post->excerpt }}
+                        {{ $article->excerpt }}
                     </div>
                     <div
                         style="flex: 1 1 17%"
                     >
-                        <a href="{{ route('post.edit', $post->id)}}">{{ _('Edit') }}</a>
+                        <a href="{{ route('article.edit', $article->id)}}">{{ _('Edit') }}</a>
                     </div>
                     <div
                         style="flex: 1 1 17%"
                     >
-                        <a href="{{ route('post.delete', $post->id)}}">{{ _('Delete') }}</a>
+                        <a href="{{ route('article.delete', $article->id)}}">{{ _('Delete') }}</a>
                     </div>
                 </div>
             @endforeach

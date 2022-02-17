@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Post;
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 
-class PostController extends Controller
+class ArticleController extends Controller
 {
     public function create()
     {
         $categories = Category::all();
         $currentTime = Carbon::now()->toDateTimeString();
-        return view('admin.createEditPost',[
+        return view('admin.createEditArticle',[
             'categories' => $categories,
             'currentTime' => $currentTime
         ]);
@@ -23,7 +23,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $post = Post::create($this->validatePost($request)->all());
+        $article = Article::create($this->validateArticle($request)->all());
         return redirect(RouteServiceProvider::ADMIN);
     }
 
@@ -31,45 +31,45 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $currentTime = Carbon::now()->toDateTimeString();
-        $post = Post::where('id',$id)->get();
-        return view('admin.createEditPost',[
+        $article = Article::where('id',$id)->get();
+        return view('admin.createEditArticle',[
             'categories' => $categories,
             'currentTime' => $currentTime,
-            'post' => $post[0]
+            'article' => $article[0]
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $post = Post::where('id',$id)->get()[0];
-        $post->update($this->validatePost($request)->all());
+        $article = Article::where('id',$id)->get()[0];
+        $article->update($this->validateArticle($request)->all());
         return redirect(RouteServiceProvider::ADMIN);
     }
 
     public function index()
     {
-        $posts = Post::where('user_id',auth()->user()->id)->take(5)->get();
+        $articles = Article::where('user_id',auth()->user()->id)->take(5)->get();
         $categories = Category::get();
         return view('auth.dashboard',[
-            'posts' => $posts
+            'articles' => $articles
         ]);
     }
 
     public function delete($id)
     {
-        $post = Post::where('id',$id)->get();
-        return view('admin.deletePost',[
-            'post' => $post[0]
+        $article = Article::where('id',$id)->get();
+        return view('admin.deleteArticle',[
+            'article' => $article[0]
         ]);
     }
 
     public function destroy($id)
     {
-        Post::where('id',$id)->get()[0]->delete();
+        Article::where('id',$id)->get()[0]->delete();
         return redirect(RouteServiceProvider::ADMIN);
     }
 
-    protected function validatePost($request){
+    protected function validateArticle($request){
         if ( !is_null($request['category_id'])):
             $request['category_id'] = intval($request['category_id']);
         endif;
@@ -83,5 +83,4 @@ class PostController extends Controller
         $request['user_id'] = auth()->user()->id;
         return $request;
     }
-
 }

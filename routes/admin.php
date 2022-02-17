@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
@@ -10,29 +10,29 @@ Route::get('/admin/', [AdminController::class, 'index'])
     ->middleware('auth')
     ->name('admin.index');
 
-Route::get('/admin/post/create', [PostController::class, 'create'])
+Route::get('/admin/article/create', [ArticleController::class, 'create'])
     ->middleware('auth')
-    ->name('post.create');
+    ->name('article.create');
 
-Route::post('/admin/post/create', [PostController::class, 'store'])
+Route::post('/admin/article/create', [ArticleController::class, 'store'])
     ->middleware('auth')
-    ->name('post.store');
+    ->name('article.store');
 
-Route::get('/admin/edit-post/{id}', [PostController::class, 'edit'])
+Route::get('/admin/edit-article/{id}', [ArticleController::class, 'edit'])
     ->middleware('auth')
-    ->name('post.edit');
+    ->name('article.edit');
 
-Route::patch('/admin/edit-post/{id}', [PostController::class, 'update'])
+Route::patch('/admin/edit-article/{id}', [ArticleController::class, 'update'])
     ->middleware('auth')
-    ->name('post.update');
+    ->name('article.update');
 
-Route::get('/admin/delete-post/{id}', [PostController::class, 'delete'])
+Route::get('/admin/delete-article/{id}', [ArticleController::class, 'delete'])
     ->middleware('auth')
-    ->name('post.delete');
+    ->name('article.delete');
 
-Route::delete('/admin/destroy-post/{id}', [PostController::class, 'destroy'])
+Route::delete('/admin/destroy-article/{id}', [ArticleController::class, 'destroy'])
     ->middleware('auth')
-    ->name('post.destroy');
+    ->name('article.destroy');
 
 Route::get('/admin/category', [CategoryController::class, 'index'])
     ->middleware('auth')

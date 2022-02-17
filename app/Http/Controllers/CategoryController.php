@@ -15,7 +15,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $post = Category::create($this->validateCategory($request)->all());
+        $category = Category::create($this->validateCategory($request)->all());
         return redirect(RouteServiceProvider::ADMIN_CATEGORY);
     }
 

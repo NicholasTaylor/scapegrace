@@ -3,32 +3,32 @@
     <head>
     </head>
     <body>
-        <form method="POST" action="{{ route('post.destroy', $post->id) }}" />
+        <form method="POST" action="{{ route('article.destroy', $article->id) }}" />
             @method('DELETE')
             @csrf
                 <h1>
-                    Delete Post?
+                    Delete Article?
                 </h1>
                 <div>
-                    Are you sure you want to delete this post?
+                    Are you sure you want to delete this article?
                 </div>
                 <div>
                     <strong>{{ _('Title') }}</strong>
                 </div>
                 <div>
-                    {{ $post->title }}"
+                    {{ $article->title }}"
                 </div>
                 <div>
                     <strong>{{ _('Excerpt') }}</strong>
                 </div>
                 <div>
-                    {{ $post->excerpt }}"
+                    {{ $article->excerpt }}"
                 </div>
                 <div>
                     <strong>{{ _('Body') }}</strong>
                 </div>
                 <div>
-                    {!! $post->body !!}
+                    {!! $article->body !!}
                 </div>
                 <div>
                     <button>
