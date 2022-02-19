@@ -1,4 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/bootstrap.js": "/js/bootstrap.js",
+    "/js/ckeditor.js": "/js/ckeditor.js",
+    "/js/wysiwyg.js": "/js/wysiwyg.js",
+    "/js/ckeditor.js.map": "/js/ckeditor.js.map"
 }

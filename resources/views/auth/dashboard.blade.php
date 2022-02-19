@@ -1,17 +1,84 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <nav>
+            <div>
+                <a href="">Articles</a>
+            </div>
+            <div>
+                <a href="{{ route('category.index') }}">Categories</a>
+            </div>
+            <div>
+                <a href="">Profile</a>
+            </div>
+        </nav>
+        <div>
+            <h1>
+                {{ __('Dashboard') }}
+            </h1>
+            <h2>
+                Hello, {{ auth()->user()->name }}
+            </h2>
+            <ul>
+                <li>
+                    <a href="{{ route('article.create') }}">Create a article</a>
+                </li>
+            </ul>
+            <h1>
+                Your Recent Articles
+            </h1>
+            <div
+                style="display:flex; flex-direction: row; flex-wrap: no-wrap;"
+            >
+                <div
+                    style="flex: 2 1 33%"
+                >
+                    <strong>{{ _('Title') }}</strong>
+                </div>
+                <div
+                    style="flex: 2 1 33%"
+                >
+                    <strong>{{ _('Excerpt') }}</strong>
+                </div>
+                <div
+                    style="flex: 1 1 17%"
+                >
+                    
+                </div>
+                <div
+                    style="flex: 1 1 17%"
+                >
+                    
                 </div>
             </div>
+            @foreach ($articles as $article)
+                <div
+                    style="display:flex; flex-direction: row; flex-wrap: no-wrap;"
+                >
+                    <div
+                        style="flex: 2 1 33%"
+                    >
+                        {{ $article->title }}
+                    </div>
+                    <div
+                        style="flex: 2 1 33%"
+                    >
+                        {{ $article->excerpt }}
+                    </div>
+                    <div
+                        style="flex: 1 1 17%"
+                    >
+                        <a href="{{ route('article.edit', $article->id)}}">{{ _('Edit') }}</a>
+                    </div>
+                    <div
+                        style="flex: 1 1 17%"
+                    >
+                        <a href="{{ route('article.delete', $article->id)}}">{{ _('Delete') }}</a>
+                    </div>
+                </div>
+            @endforeach
         </div>
-    </div>
-</x-app-layout>
+    </body>
+</html>
