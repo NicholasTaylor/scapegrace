@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\PermissionRegistrar;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +18,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        $permissionsArr = [
+            'create articles',
+            'edit articles',
+            'delete articles',
+            'publish articles',
+            'unpublish articles',
+            'create categories',
+            'edit categories',
+            'delete categories',
+            'create tags',
+            'edit tags',
+            'delete tags',
+            'create roles',
+            'edit roles',
+            'delete roles',
+            'assign roles',
+            'remove roles'
+        ];
+        foreach ($permissionsArr as $permission)
+        {
+            Permission::create(['name' => $permission]);
+        }
         $superAdmin = Role::create(['name' => 'Super-Admin']);
         $user = \App\Models\User::factory()->create([
             'name' => env('SEEDER_USER_NAME'),

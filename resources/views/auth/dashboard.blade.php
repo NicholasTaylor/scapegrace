@@ -21,11 +21,13 @@
             <h2>
                 Hello, {{ auth()->user()->name }}
             </h2>
-            <ul>
-                <li>
-                    <a href="{{ route('article.create') }}">Create a article</a>
-                </li>
-            </ul>
+            @can('create articles')
+                <ul>
+                    <li>
+                        <a href="{{ route('article.create') }}">Create an article</a>
+                    </li>
+                </ul>
+            @endcan
             <h1>
                 Your Recent Articles
             </h1>
@@ -42,16 +44,20 @@
                 >
                     <strong>{{ _('Excerpt') }}</strong>
                 </div>
-                <div
-                    style="flex: 1 1 17%"
-                >
-                    
-                </div>
-                <div
-                    style="flex: 1 1 17%"
-                >
-                    
-                </div>
+                @can('edit articles')
+                    <div
+                        style="flex: 1 1 17%"
+                    >
+                        
+                    </div>
+                @endcan
+                @can('delete articles')
+                    <div
+                        style="flex: 1 1 17%"
+                    >
+                        
+                    </div>
+                @endcan
             </div>
             @foreach ($articles as $article)
                 <div
@@ -67,16 +73,20 @@
                     >
                         {{ $article->excerpt }}
                     </div>
-                    <div
-                        style="flex: 1 1 17%"
-                    >
-                        <a href="{{ route('article.edit', $article->id)}}">{{ _('Edit') }}</a>
-                    </div>
-                    <div
-                        style="flex: 1 1 17%"
-                    >
-                        <a href="{{ route('article.delete', $article->id)}}">{{ _('Delete') }}</a>
-                    </div>
+                    @can('edit articles')
+                        <div
+                            style="flex: 1 1 17%"
+                        >
+                            <a href="{{ route('article.edit', $article->id)}}">{{ _('Edit') }}</a>
+                        </div>
+                    @endcan
+                    @can('delete articles')
+                        <div
+                            style="flex: 1 1 17%"
+                        >
+                            <a href="{{ route('article.delete', $article->id)}}">{{ _('Delete') }}</a>
+                        </div>
+                    @endcan
                 </div>
             @endforeach
         </div>
