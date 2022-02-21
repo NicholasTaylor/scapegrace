@@ -35,13 +35,13 @@ class ArticleController extends Controller
         return view('admin.createEditArticle',[
             'categories' => $categories,
             'currentTime' => $currentTime,
-            'article' => $article[0]
+            'article' => $article->firstOrFail()
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $article = Article::where('id',$id)->get()[0];
+        $article = Article::where('id',$id)->get()->firstOrFail();
         $article->update($this->validateArticle($request)->all());
         return redirect(RouteServiceProvider::ADMIN);
     }
@@ -59,13 +59,13 @@ class ArticleController extends Controller
     {
         $article = Article::where('id',$id)->get();
         return view('admin.deleteArticle',[
-            'article' => $article[0]
+            'article' => $article->firstOrFail()
         ]);
     }
 
     public function destroy($id)
     {
-        Article::where('id',$id)->get()[0]->delete();
+        Article::where('id',$id)->get()->firstOrFail()->delete();
         return redirect(RouteServiceProvider::ADMIN);
     }
 

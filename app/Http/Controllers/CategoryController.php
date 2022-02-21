@@ -23,13 +23,13 @@ class CategoryController extends Controller
     {
         $category = Category::where('id',$id)->get();
         return view('admin.createEditCategory',[
-            'category' => $category[0]
+            'category' => $category->firstOrFail()
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $category = Category::where('id',$id)->get()[0];
+        $category = Category::where('id',$id)->get()->firstOrFail();
         $category->update($this->validateCategory($request)->all());
         return redirect(RouteServiceProvider::ADMIN_CATEGORY);
     }
@@ -38,13 +38,13 @@ class CategoryController extends Controller
     {
         $category = Category::where('id',$id)->get();
         return view('admin.deleteCategory',[
-            'category' => $category[0]
+            'category' => $category->firstOrFail()
         ]);
     }
 
     public function destroy($id)
     {
-        Category::where('id',$id)->get()[0]->delete();
+        Category::where('id',$id)->get()->firstOrFail()->delete();
         return redirect(RouteServiceProvider::ADMIN_CATEGORY);
     }
 
