@@ -3,10 +3,11 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/admin/', [AdminController::class, 'index'])
+Route::get('/admin', [AdminController::class, 'index'])
     ->middleware('auth')
     ->name('admin.index');
 
@@ -61,3 +62,31 @@ Route::get('/admin/delete-category/{id}', [CategoryController::class, 'delete'])
 Route::delete('/admin/destroy-category/{id}', [CategoryController::class, 'destroy'])
     ->middleware('auth')
     ->name('category.destroy');
+
+Route::get('/admin/roles', [RoleController::class, 'index'])
+    ->middleware('auth')
+    ->name('role.index');
+
+    Route::get('/admin/role/create', [RoleController::class, 'create'])
+    ->middleware('auth')
+    ->name('role.create');
+
+Route::post('/admin/role/create', [RoleController::class, 'store'])
+    ->middleware('auth')
+    ->name('role.store');
+
+Route::get('/admin/edit-role/{id}', [RoleController::class, 'edit'])
+    ->middleware('auth')
+    ->name('role.edit');
+
+Route::patch('/admin/edit-role/{id}', [RoleController::class, 'update'])
+    ->middleware('auth')
+    ->name('role.update');
+
+Route::get('/admin/delete-role/{id}', [RoleController::class, 'delete'])
+    ->middleware('auth')
+    ->name('role.delete');
+
+Route::delete('/admin/destroy-role/{id}', [RoleController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('role.destroy');

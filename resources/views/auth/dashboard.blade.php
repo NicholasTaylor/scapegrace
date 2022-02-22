@@ -7,9 +7,16 @@
             <div>
                 <a href="">Articles</a>
             </div>
-            <div>
-                <a href="{{ route('category.index') }}">Categories</a>
-            </div>
+            @if(Gate::check('create categories') || Gate::check('edit categories') || Gate::check('delete categories'))
+                <div>
+                    <a href="{{ route('category.index') }}">Categories</a>
+                </div>
+            @endif
+            @if(Gate::check('create roles') || Gate::check('edit roles') || Gate::check('delete roles') || Gate::check('assign roles') || Gate::check('remove roles'))
+                <div>
+                    <a href="{{ route('role.index') }}">Roles</a>
+                </div>
+            @endif
             <div>
                 <a href="">Profile</a>
             </div>

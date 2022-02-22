@@ -3,11 +3,13 @@
     <head>
     </head>
     <body>
-        <a
-            href="{{ route('category.create') }}"
-        >
-            Create New Category
-        </a>
+        @can('create categories')
+            <a
+                href="{{ route('category.create') }}"
+            >
+                Create New Category
+            </a>
+        @endcan
         <h1>
             Your Categories
         </h1>
@@ -25,16 +27,18 @@
             >
                 <strong>{{ _('Description') }}</strong>
             </div>
-            <div
-                style="flex: 1 1 17%"
-            >
-                
-            </div>
-            <div
-                style="flex: 1 1 17%"
-            >
-                
-            </div>
+            @can('edit categories')
+                <div
+                    style="flex: 1 1 17%"
+                >
+                </div>
+            @endcan
+            @can('delete categories')
+                <div
+                    style="flex: 1 1 17%"
+                >               
+                </div>
+            @endcan 
         </div>
         @foreach ($categories as $category)
             <div
@@ -50,16 +54,21 @@
                 >
                     {{ $category->description }}
                 </div>
+
+            @can('edit categories')
                 <div
                     style="flex: 1 1 17%"
                 >
                     <a href="{{ route('category.edit', $category->id)}}">{{ _('Edit') }}</a>
                 </div>
+            @endcan
+            @can('delete categories')
                 <div
                     style="flex: 1 1 17%"
                 >
                     <a href="{{ route('category.delete', $category->id)}}">{{ _('Delete') }}</a>
                 </div>
+            @endcan 
             </div>
 
         @endforeach
