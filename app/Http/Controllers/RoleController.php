@@ -49,9 +49,6 @@ class RoleController extends Controller
         $role = Role::where('id',$id)->get()->firstOrFail();
         $role->update(['name' => $validated['name']]);
         $role->syncPermissions($validated['permissions']);
-        #foreach ($validated['permissions'] as $permission){
-        #    $role->givePermissionTo($permission);
-        #}
         return redirect(RouteServiceProvider::ADMIN_ROLE);
     }
 

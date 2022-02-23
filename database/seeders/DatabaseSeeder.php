@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
         $permissionsArr = [
+            'edit users',
+            'delete users',
             'create articles',
             'edit articles',
             'delete articles',

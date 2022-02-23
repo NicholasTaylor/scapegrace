@@ -6,12 +6,14 @@
         else:
             $category_id_match = '';
         endif;
+
+        $mode = Route::currentRouteName() == 'article.edit' ? 'edit' : 'create';
     ?>
     <head>
     </head>
     <body>
-        <form method="POST" action="{{ Route::currentRouteName() == 'article.edit' ? route('article.update', $article->id) : route('article.store') }}" />
-            @if (Route::currentRouteName() == 'article.edit')
+        <form method="POST" action="{{ $mode == 'edit' ? route('article.update', $article->id) : route('article.store') }}" />
+            @if ($mode == 'edit')
                 @method('PATCH')
             @endif
             @csrf
@@ -22,21 +24,21 @@
                     <label for="title">
                         {{ __('Title') }}
                     </label>
-                    <input id="title" type="text" name="title" value="{{ Route::currentRouteName() == 'article.edit' ? $article->title : old('title') }}" required autofocus />
+                    <input id="title" type="text" name="title" value="{{ $mode == 'edit' ? $article->title : old('title') }}" required autofocus />
                 </div>
                 
                 <div>
                     <label for="excerpt">
                         {{ __('Excerpt') }}
                     </label>
-                    <input id="excerpt" type="text" name="excerpt" value="{{ Route::currentRouteName() == 'article.edit' ? $article->excerpt : old('excerpt') }}" />
+                    <input id="excerpt" type="text" name="excerpt" value="{{ $mode == 'edit' ? $article->excerpt : old('excerpt') }}" />
                 </div>
                 
                 <div>
                     <label for="body">
                         {{ __('Body') }}
                     </label>
-                    <textarea id="body" name="body" value="{{ Route::currentRouteName() == 'article.edit' ? $article->body : old('body') }}" />
+                    <textarea id="body" name="body" value="{{ $mode == 'edit' ? $article->body : old('body') }}" />
                     </textarea>
                 </div>
                 
@@ -57,7 +59,7 @@
                     <label for="published_at">
                         {{ __('Publish Date') }}
                     </label>
-                    <input id="published_at" type="datetime-local" name="published_at" value="{{ Route::currentRouteName() == 'article.edit' ? $article->published_at : $currentTime }}" required />
+                    <input id="published_at" type="datetime-local" name="published_at" value="{{ $mode == 'edit' ? $article->published_at : $currentTime }}" required />
                 </div>
 
                 <div>

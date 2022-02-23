@@ -48,9 +48,9 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $articles = Article::where('user_id',auth()->user()->id)->take(5)->get();
-        $categories = Category::get();
-        return view('auth.dashboard',[
+        $articles = Article::all();
+        $categories = Category::all();
+        return view('admin.articles',[
             'articles' => $articles
         ]);
     }

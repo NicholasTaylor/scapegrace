@@ -4,17 +4,24 @@
     </head>
     <body>
         <nav>
-            <div>
-                <a href="">Articles</a>
-            </div>
+            @if(Gate::check('create articles') || Gate::check('edit articles') || Gate::check('delete articles'))
+                <div>
+                    <a href="{{ route('article.index') }}">Articles</a>
+                </div>
+            @endif
             @if(Gate::check('create categories') || Gate::check('edit categories') || Gate::check('delete categories'))
                 <div>
                     <a href="{{ route('category.index') }}">Categories</a>
                 </div>
             @endif
-            @if(Gate::check('create roles') || Gate::check('edit roles') || Gate::check('delete roles') || Gate::check('assign roles') || Gate::check('remove roles'))
+            @if(Gate::check('create roles') || Gate::check('edit roles') || Gate::check('remove roles'))
                 <div>
                     <a href="{{ route('role.index') }}">Roles</a>
+                </div>
+            @endif
+            @if(Gate::check('edit users') ||  Gate::check('delete users') || Gate::check('assign roles') || Gate::check('remove roles'))
+                <div>
+                    <a href="{{ route('user.index') }}">Users</a>
                 </div>
             @endif
             <div>
