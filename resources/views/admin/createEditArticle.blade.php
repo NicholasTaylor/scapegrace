@@ -8,6 +8,10 @@
         endif;
 
         $mode = Route::currentRouteName() == 'article.edit' ? 'edit' : 'create';
+
+        if($mode == 'edit'):
+            $user_id_match = $article->user_id;
+        endif;
     ?>
     <head>
     </head>
@@ -20,6 +24,19 @@
                 <h1>
                     Create Article
                 </h1>
+                @if ($mode == 'edit')
+                    <div>
+                        <label for="user">
+                            {{ __('Author') }}
+                        </label>
+                        <select id="new_user_id" name="new_user_id">
+                            <option value="">None</option>
+                            @foreach ($allUsers as $user)
+                                <option value="{{ $user->id }}"{{ $user_id_match == $user->id ? ' selected' : ''  }}>{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
                 <div>
                     <label for="title">
                         {{ __('Title') }}

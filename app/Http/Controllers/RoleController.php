@@ -69,9 +69,12 @@ class RoleController extends Controller
     protected function validateRole($request){
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'permissions' => ['array', 'nullable'],
-            'permissions[*]' => ['string', 'nullable|in:'.Permission::all()->implode('name', ',')]
+            'permissions' => ['nullable', 'array'],
+            'permissions[*]' => ['nullable', 'string', 'in:'.Permission::all()->implode('name', ',')]
         ]);
+        if (!(isset($request['permissions']))):
+            $request['permissions'] = [];
+        endif;
         return $request;
     }
 }
