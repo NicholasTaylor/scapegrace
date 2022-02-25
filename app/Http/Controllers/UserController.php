@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -28,11 +29,16 @@ class UserController extends Controller
     {
         $validated = $this->validateUserUpdate($request, $id)->all();
         $user = User::where('id',$id)->get()->firstOrFail();
-        $user->update(array(
-            'name' => $validated['name'],
-            'email' => $validated['email']
-        ));
-        if (isset($validated['roles'])):
+        if (Gate::check('edit users')):
+            $user->update(array(
+                'name' => $validated['name'],
+                'email' => $validated['email']
+            ));
+        endif;
+        if (!(isset($validated['roles']))):
+            $validated['roles'] = [];
+        endif;
+        if (Gate::check('change roles')):
             $user->syncRoles($validated['roles']);
         endif;
         return redirect(RouteServiceProvider::ADMIN_USER);

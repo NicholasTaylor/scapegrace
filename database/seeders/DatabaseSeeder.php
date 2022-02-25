@@ -36,8 +36,7 @@ class DatabaseSeeder extends Seeder
             'create roles',
             'edit roles',
             'delete roles',
-            'assign roles',
-            'remove roles'
+            'change roles'
         ];
         foreach ($permissionsArr as $permission)
         {

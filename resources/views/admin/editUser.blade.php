@@ -13,17 +13,27 @@
                     Edit User
                 </h1>
                 <div>
-                    <label for="name">
-                        {{ __('Name') }}
-                    </label>
-                    <input id="name" type="text" name="name" value="{{ $user->name }}" required autofocus />
+                    @if (Gate::check('edit users'))
+                        <label for="name">
+                            {{ __('Name') }}
+                        </label>
+                        <input id="name" type="text" name="name" value="{{ $user->name }}" required autofocus />
+                    @else
+                        {{ __('Name') }}: {{ $user->name }}
+                        <input type="hidden" name="name" value="{{ $user->name }}">
+                    @endif
                 </div>
                 
                 <div>
-                    <label for="email">
-                        {{ __('Email') }}
-                    </label>
-                    <input id="email" type="text" name="email" value="{{ $user->email }}" />
+                    @if (Gate::check('edit users'))
+                        <label for="email">
+                            {{ __('Email') }}
+                        </label>
+                        <input id="email" type="text" name="email" value="{{ $user->email }}" />
+                    @else
+                    {{ __('Email') }}: {{ $user->email }}
+                    <input type="hidden" name="email" value="{{ $user->email }}">
+                    @endif
                 </div>
                 
                 
@@ -35,8 +45,12 @@
                         <ul>
                             @foreach ($allRoles as $role)
                                 <li>
-                                    <input type="checkbox" id="{{ $role->name }}" value="{{ $role->name }}" name="roles[]"{{ in_array($role->id,$roleIds) ? 'checked' : '' }}>
-                                    <label for="{{ $role->name }}">{{ ucwords($role->name) }}</label>
+                                    @if (Gate::check('change roles'))
+                                        <input type="checkbox" id="{{ $role->name }}" value="{{ $role->name }}" name="roles[]"{{ in_array($role->id,$roleIds) ? 'checked' : '' }}>
+                                        <label for="{{ $role->name }}">{{ ucwords($role->name) }}</label>
+                                    @else
+                                        {{ ucwords($role->name) }}
+                                    @endif
                                 </li>
                             @endforeach
                         </ul>

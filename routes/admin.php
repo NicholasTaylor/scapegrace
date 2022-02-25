@@ -14,7 +14,7 @@ Route::get('/admin', [AdminController::class, 'index'])
 
 Route::get('/admin/article', [ArticleController::class, 'index'])
     ->middleware('auth')
-    ->middleware('permission:create articles|permission:edit articles|permission:delete articles|permission:publish articles|permission:unpublish articles')
+    ->middleware('permission:create articles|edit articles|delete articles|publish articles|unpublish articles')
     ->name('article.index');
 
 Route::get('/admin/article/create', [ArticleController::class, 'create'])
@@ -49,7 +49,7 @@ Route::delete('/admin/destroy-article/{id}', [ArticleController::class, 'destroy
 
 Route::get('/admin/category', [CategoryController::class, 'index'])
     ->middleware('auth')
-    ->middleware('permission:create categories|permission:edit categories|permission:delete categories')
+    ->middleware('permission:create categories|edit categories|delete categories')
     ->name('category.index');
 
 Route::get('/admin/category/create', [CategoryController::class, 'create'])
@@ -84,7 +84,7 @@ Route::delete('/admin/destroy-category/{id}', [CategoryController::class, 'destr
 
 Route::get('/admin/roles', [RoleController::class, 'index'])
     ->middleware('auth')
-    ->middleware('permission:create roles|permission:edit roles|permission:delete roles')
+    ->middleware('permission:create roles|edit roles|delete roles')
     ->name('role.index');
 
 Route::get('/admin/role/create', [RoleController::class, 'create'])
@@ -119,17 +119,17 @@ Route::delete('/admin/destroy-role/{id}', [RoleController::class, 'destroy'])
 
 Route::get('/admin/users', [UserController::class, 'index'])
     ->middleware('auth')
-    ->middleware('permission:edit users|permission:delete users|permission:assign roles|permission:remove roles')
+    ->middleware('permission:edit users|delete users|change roles')
     ->name('user.index');
 
 Route::get('/admin/edit-user/{id}', [UserController::class, 'edit'])
     ->middleware('auth')
-    ->middleware('permission:edit users|permission:assign roles|permission:remove roles')
+    ->middleware('permission:edit users|change roles')
     ->name('user.edit');
 
 Route::patch('/admin/edit-user/{id}', [UserController::class, 'update'])
     ->middleware('auth')
-    ->middleware('permission:edit users|permission:assign roles|permission:remove roles')
+    ->middleware('permission:edit users|change roles')
     ->name('user.update');
 
 Route::get('/admin/delete-user/{id}', [UserController::class, 'delete'])

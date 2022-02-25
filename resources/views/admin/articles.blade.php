@@ -55,14 +55,14 @@
                     {{ $article->excerpt }}
                 </div>
 
-            @can('edit categories')
+            @can('edit articles')
                 <div
                     style="flex: 1 1 17%"
                 >
                     <a href="{{ route('article.edit', $article->id)}}">{{ _('Edit') }}</a>
                 </div>
             @endcan
-            @can('delete categories')
+            @can('delete articles')
                 <div
                     style="flex: 1 1 17%"
                 >

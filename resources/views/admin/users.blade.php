@@ -20,7 +20,7 @@
             >
                 <strong>{{ _('Roles') }}</strong>
             </div>
-            @if(Gate:: check('edit users') || Gate::check('assign roles') || Gate::check('remove roles'))
+            @if(Gate:: check('edit users') || Gate::check('change roles'))
                 <div
                     style="flex: 1 1 25%"
                 >
@@ -56,30 +56,26 @@
                         @endforeach
                     @endif
                 </div>
-                @if((Gate::check('edit users') || Gate::check('assign roles') || Gate::check('remove roles')) && (!(in_array('Super-Admin',$user->roles()->get()->pluck('name')->all())) || $user->id == auth()->user()->id))
+                @if((Gate::check('edit users') || Gate::check('change roles')))
                     <div
                         style="flex: 1 1 25%"
                     >
-                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
-                    </div>
-                @elseif(Gate::check('delete users'))
-                    <div
-                        style="flex: 1 1 25%"
-                    >
-                        &nbsp;                        
+                        @if((!(in_array('Super-Admin',$user->roles()->get()->pluck('name')->all())) || $user->id == auth()->user()->id))
+                            <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                        @else
+                            &nbsp;
+                        @endif
                     </div>
                 @endif
-                @if(Gate::check('delete users') && !(in_array('Super-Admin',$user->roles()->get()->pluck('name')->all())))
+                @if(Gate::check('delete users'))
                     <div
                         style="flex: 1 1 25%"
                     >
-                        <a href="{{ route('user.delete', $user->id) }}">Delete</a>
-                    </div>
-                @elseif(Gate::check('delete users'))
-                    <div
-                        style="flex: 1 1 25%"
-                    >
-                        &nbsp;                        
+                        @if(!(in_array('Super-Admin',$user->roles()->get()->pluck('name')->all())))
+                            <a href="{{ route('user.delete', $user->id) }}">Delete</a>
+                        @else
+                            &nbsp;
+                        @endif
                     </div>
                 @endif
             </div>

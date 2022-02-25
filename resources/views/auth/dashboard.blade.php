@@ -14,12 +14,12 @@
                     <a href="{{ route('category.index') }}">Categories</a>
                 </div>
             @endif
-            @if(Gate::check('create roles') || Gate::check('edit roles') || Gate::check('remove roles'))
+            @if(Gate::check('create roles') || Gate::check('edit roles'))
                 <div>
                     <a href="{{ route('role.index') }}">Roles</a>
                 </div>
             @endif
-            @if(Gate::check('edit users') ||  Gate::check('delete users') || Gate::check('assign roles') || Gate::check('remove roles'))
+            @if(Gate::check('edit users') ||  Gate::check('delete users') || Gate::check('change roles'))
                 <div>
                     <a href="{{ route('user.index') }}">Users</a>
                 </div>
