@@ -16,8 +16,10 @@
         $prefillHTML = $mode == 'edit' ? $article->body : ''
     ?>
     <head>
-        <!--<script defer src="{{ asset('js/app.js') }}"></script>-->
-        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <!--<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>-->
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <script defer src="{{ asset('js/app.js') }}"></script>
     </head>
     <body>
         <form method="POST" action="{{ $mode == 'edit' ? route('article.update', $article->id) : route('article.store') }}" />
@@ -93,12 +95,5 @@
                     @endforeach
                 @endif
         </form>
-
-        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-        <script>
-        var quill = new Quill('#body', {
-            theme: 'snow'
-        });
-        </script>
     </body>
 </html>
