@@ -37,6 +37,11 @@ Route::patch('/admin/edit-article/{id}', [ArticleController::class, 'update'])
     ->middleware('permission:edit articles')
     ->name('article.update');
 
+Route::post('/admin/upload', [ArticleController::class, 'uploadImg'])
+    ->middleware('auth')    
+    ->middleware('permission:create articles|edit articles')
+    ->name('article.uploadImg');
+
 Route::get('/admin/delete-article/{id}', [ArticleController::class, 'delete'])
     ->middleware('auth')
     ->middleware('permission:delete articles')

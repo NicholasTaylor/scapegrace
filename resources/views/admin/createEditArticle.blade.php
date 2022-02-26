@@ -12,8 +12,12 @@
         if($mode == 'edit'):
             $user_id_match = $article->user_id;
         endif;
+
+        $prefillHTML = $mode == 'edit' ? $article->body : ''
     ?>
     <head>
+        <!--<script defer src="{{ asset('js/app.js') }}"></script>-->
+        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     </head>
     <body>
         <form method="POST" action="{{ $mode == 'edit' ? route('article.update', $article->id) : route('article.store') }}" />
@@ -52,11 +56,9 @@
                 </div>
                 
                 <div>
-                    <label for="body">
-                        {{ __('Body') }}
-                    </label>
-                    <textarea id="body" name="body" value="{{ $mode == 'edit' ? $article->body : old('body') }}" />
-                    </textarea>
+                    <div id="body">
+                        {!! $prefillHTML !!}
+                    </div>
                 </div>
                 
                 @if (count($categories) > 0)
@@ -81,7 +83,7 @@
 
                 <div>
                     <button>
-                        {{ __('Article') }}
+                        {{ __($mode == 'edit' ? 'Save' : 'Create') }}
                     </button>
                 </div>
 
@@ -91,7 +93,12 @@
                     @endforeach
                 @endif
         </form>
-        <script src="{{ asset('js/ckeditor.js') }}"></script>
-        <script src="{{ asset('js/wysiwyg.js') }}"></script>
+
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+        <script>
+        var quill = new Quill('#body', {
+            theme: 'snow'
+        });
+        </script>
     </body>
 </html>

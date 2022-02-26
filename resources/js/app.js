@@ -1,7 +1,12 @@
-require('./bootstrap');
+/*import Alpine  from 'alpinejs';
+require('./bootstrap');*/
 
-import Alpine from 'alpinejs';
+import Quill from 'quill';
 
-window.Alpine = Alpine;
+const quill = new Quill('#body', {
+    theme: 'snow'
+})
 
+/*window.Alpine = Alpine;
 Alpine.start();
+*/

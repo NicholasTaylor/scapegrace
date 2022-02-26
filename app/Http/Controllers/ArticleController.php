@@ -70,6 +70,25 @@ class ArticleController extends Controller
         return redirect(RouteServiceProvider::ADMIN);
     }
 
+    public function uploadImg(Request $request)
+    {
+        if($request->hasFile('upload')) {
+            $file = $request->file('upload');
+            $uploadDir = 'public/images';
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $ext = $file->getClientOriginalExtension();
+            $filenameTime = $filename.'_'.time().'.'.$ext;
+            $file->move($uploadDir,$filenameTime);
+            $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+            $url = asset($uploadDir.'/'.$filenameTime);
+            $msg = 'File uploaded.';
+            $output = '<script>window.parent.CKEDITOR.tools.callFunction('.$CKEditorFuncNum.', \''.$url.'\', \''.$msg.'\')</script>';
+            @header('Content-type: text/html; charset=utf-8');
+            echo $output;
+        }
+    }
+
     protected function validateArticle($request){
         if ( !is_null($request['category_id'])):
             $request['category_id'] = intval($request['category_id']);
