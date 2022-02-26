@@ -5,13 +5,13 @@
     <body>
         @can('create categories')
             <a
-                href="{{ route('category.create') }}"
+                href="{{ route('article.create') }}"
             >
-                Create New Category
+                Create New Article
             </a>
         @endcan
         <h1>
-            Your Categories
+            Articles
         </h1>
 
         <div
@@ -20,53 +20,53 @@
             <div
                 style="flex: 2 1 33%"
             >
-                <strong>{{ _('Category Name') }}</strong>
+                <strong>{{ _('Title') }}</strong>
             </div>
             <div
                 style="flex: 2 1 33%"
             >
-                <strong>{{ _('Description') }}</strong>
+                <strong>{{ _('Excerpt') }}</strong>
             </div>
-            @can('edit categories')
+            @can('edit articles')
                 <div
                     style="flex: 1 1 17%"
                 >
                 </div>
             @endcan
-            @can('delete categories')
+            @can('delete articles')
                 <div
                     style="flex: 1 1 17%"
                 >               
                 </div>
             @endcan 
         </div>
-        @foreach ($categories as $category)
+        @foreach ($articles as $article)
             <div
                 style="display:flex; flex-direction: row; flex-wrap: no-wrap;"
             >
                 <div
                     style="flex: 2 1 33%"
                 >
-                    {{ $category->name }}
+                    {{ $article->title }}
                 </div>
                 <div
                     style="flex: 2 1 33%"
                 >
-                    {{ $category->description }}
+                    {{ $article->excerpt }}
                 </div>
 
-            @can('edit categories')
+            @can('edit articles')
                 <div
                     style="flex: 1 1 17%"
                 >
-                    <a href="{{ route('category.edit', $category->id)}}">{{ _('Edit') }}</a>
+                    <a href="{{ route('article.edit', $article->id)}}">{{ _('Edit') }}</a>
                 </div>
             @endcan
-            @can('delete categories')
+            @can('delete articles')
                 <div
                     style="flex: 1 1 17%"
                 >
-                    <a href="{{ route('category.delete', $category->id)}}">{{ _('Delete') }}</a>
+                    <a href="{{ route('article.delete', $article->id)}}">{{ _('Delete') }}</a>
                 </div>
             @endcan 
             </div>

@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
+    <?php 
+        $mode = Route::currentRouteName() == 'category.edit' ? 'edit' : 'create';
+    ?>
     <head>
     </head>
     <body>
-        <form method="POST" action="{{ Route::currentRouteName() == 'category.edit' ? route('category.update', $category->id) : route('category.store') }}" />
-            @if (Route::currentRouteName() == 'category.edit')
+        <form method="POST" action="{{ $mode == 'edit' ? route('category.update', $category->id) : route('category.store') }}" />
+            @if ($mode == 'edit')
                 @method('PATCH')
             @endif
             @csrf
@@ -15,14 +18,14 @@
                     <label for="name">
                         {{ __('Category Name') }}
                     </label>
-                    <input id="name" type="text" name="name" value="{{ Route::currentRouteName() == 'category.edit' ? $category->name : old('name') }}" required autofocus />
+                    <input id="name" type="text" name="name" value="{{ $mode == 'edit' ? $category->name : old('name') }}" required autofocus />
                 </div>
                 
                 <div>
                     <label for="description">
                         {{ __('Description') }}
                     </label>
-                    <input id="description" type="text" name="description" value="{{ Route::currentRouteName() == 'category.edit' ? $category->description : old('description') }}" />
+                    <input id="description" type="text" name="description" value="{{ $mode == 'edit' ? $category->description : old('description') }}" />
                 </div>
 
                 <div>

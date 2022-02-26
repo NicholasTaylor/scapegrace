@@ -35,22 +35,23 @@ class ArticleController extends Controller
         return view('admin.createEditArticle',[
             'categories' => $categories,
             'currentTime' => $currentTime,
-            'article' => $article[0]
+            'article' => $article->firstOrFail(),
+            'allUsers' => User::all()
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $article = Article::where('id',$id)->get()[0];
-        $article->update($this->validateArticle($request)->all());
+        $article = Article::where('id',$id)->get()->firstOrFail();
+        $article->update($this->validateArticleUpdate($request)->all());
         return redirect(RouteServiceProvider::ADMIN);
     }
 
     public function index()
     {
-        $articles = Article::where('user_id',auth()->user()->id)->take(5)->get();
-        $categories = Category::get();
-        return view('auth.dashboard',[
+        $articles = Article::all();
+        $categories = Category::all();
+        return view('admin.articles',[
             'articles' => $articles
         ]);
     }
@@ -59,13 +60,13 @@ class ArticleController extends Controller
     {
         $article = Article::where('id',$id)->get();
         return view('admin.deleteArticle',[
-            'article' => $article[0]
+            'article' => $article->firstOrFail()
         ]);
     }
 
     public function destroy($id)
     {
-        Article::where('id',$id)->get()[0]->delete();
+        Article::where('id',$id)->get()->firstOrFail()->delete();
         return redirect(RouteServiceProvider::ADMIN);
     }
 
@@ -78,9 +79,29 @@ class ArticleController extends Controller
             'excerpt' => ['string', 'max:100', 'nullable'],
             'body' => ['string', 'nullable'],
             'category_id' => ['integer', 'nullable'],
-            'published_at' => ['required', 'date'],
+            'published_at' => ['required', 'date']
         ]);
         $request['user_id'] = auth()->user()->id;
+        return $request;
+    }
+
+    protected function validateArticleUpdate($request){
+        $validateArr = [
+            'title' => ['required', 'string', 'max:200'],
+            'excerpt' => ['string', 'max:100', 'nullable'],
+            'body' => ['string', 'nullable'],
+            'category_id' => ['nullable', 'string', 'in:'.Category::all()->implode('id', ',')],
+            'published_at' => ['required', 'date']
+        ];
+        if (isset($request['new_user_id'])):
+            $validateArr['new_user_id'] = ['nullable', 'string', 'in:'.User::all()->implode('id', ',')];
+            $request->validate($validateArr);
+            $request['user_id'] = $request['new_user_id'];
+            unset($request['new_user_id']);
+        else:
+            $request->validate($validateArr);
+            $request['user_id'] = auth()->user()->id;
+        endif;
         return $request;
     }
 }
