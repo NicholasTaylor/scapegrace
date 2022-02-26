@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamp('published_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
             $table->foreign('category_id')->references('id')->on('categories')->nullOnDelete();
 
             

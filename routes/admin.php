@@ -132,6 +132,18 @@ Route::patch('/admin/edit-user/{id}', [UserController::class, 'update'])
     ->middleware('permission:edit users|change roles')
     ->name('user.update');
 
+Route::get('/admin/profile', [UserController::class, 'editProfile'])
+    ->middleware('auth')
+    ->name('user.editProfile');
+
+Route::patch('/admin/profile', [UserController::class, 'updateProfile'])
+    ->middleware('auth')
+    ->name('user.updateProfile');
+
+Route::delete('/admin/destroyProfile', [UserController::class, 'destroyProfile'])
+    ->middleware('auth')
+    ->name('user.destroyProfile');
+
 Route::get('/admin/delete-user/{id}', [UserController::class, 'delete'])
     ->middleware('auth')
     ->middleware('permission:delete users')

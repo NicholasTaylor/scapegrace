@@ -25,7 +25,7 @@
                 </div>
             @endif
             <div>
-                <a href="">Profile</a>
+                <a href="{{ route('user.editProfile') }}">Profile</a>
             </div>
         </nav>
         <div>

@@ -24,6 +24,15 @@ class UserController extends Controller
         ]);
     }
 
+    public function editProfile()
+    {
+        $user = auth()->user();
+        $articles = Article::where('user_id',$user->id)->get()->all();
+        return view('admin.editProfile',[
+            'user' => $user,
+            'articles' => $articles
+        ]);
+    }
 
     public function update(Request $request, $id)
     {
@@ -42,6 +51,17 @@ class UserController extends Controller
             $user->syncRoles($validated['roles']);
         endif;
         return redirect(RouteServiceProvider::ADMIN_USER);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        $validated = $this->validateProfileUpdate($request, $user->id)->all();
+        $user->update(array(
+            'name' => $validated['name'],
+            'email' => $validated['email']
+        ));
+        return redirect(RouteServiceProvider::ADMIN);
     }
 
     public function index()
@@ -68,6 +88,12 @@ class UserController extends Controller
         return redirect(RouteServiceProvider::ADMIN_USER);
     }
 
+    public function destroyProfile()
+    {
+        auth()->user()->delete();
+        return redirect(url(''));
+    }
+
     protected function validateUser($request){
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -84,6 +110,14 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$id],
             'roles' => ['array', 'nullable'],
             'roles[*]' => ['string', 'nullable|in:'.Role::all()->implode('name', ',')]
+        ]);
+        return $request;
+    }
+
+    protected function validateProfileUpdate($request, $id){
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$id],
         ]);
         return $request;
     }
