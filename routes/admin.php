@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AssetController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -158,3 +159,23 @@ Route::delete('/admin/destroy-user/{id}', [UserController::class, 'destroy'])
     ->middleware('auth')
     ->middleware('permission:delete users')
     ->name('user.destroy');
+
+Route::get('/admin/upload-asset/{id}', [AssetController::class, 'create'])
+    ->middleware('auth')
+    ->middleware('permission:create articles|edit articles')
+    ->name('asset.create');
+
+Route::post('/admin/upload-asset/{id}', [AssetController::class, 'store'])
+    ->middleware('auth')
+    ->middleware('permission:create articles|edit articles')
+    ->name('asset.store');
+
+Route::get('/admin/edit-asset/{id}', [AssetController::class, 'edit'])
+    ->middleware('auth')
+    ->middleware('permission:create articles|edit articles')
+    ->name('asset.edit');
+
+Route::patch('/admin/edit-asset/{id}', [AssetController::class, 'update'])
+    ->middleware('auth')
+    ->middleware('permission:create articles|edit articles')
+    ->name('asset.update');

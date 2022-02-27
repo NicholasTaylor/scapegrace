@@ -38,4 +38,9 @@ class Article extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function assets()
+    {
+        return $this->hasMany(Asset::class);
+    }
 }

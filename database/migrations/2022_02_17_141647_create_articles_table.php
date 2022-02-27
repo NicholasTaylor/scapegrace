@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('body')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->text('tags')->nullable();
+            $table->boolean('published')->nullable()->default(false);
             $table->timestamp('published_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
 
