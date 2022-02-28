@@ -31,6 +31,11 @@ mix.extend('quill', webpackConfig => {
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-.css('resources/css/app.css', 'public/css')
+mix.js('resources/js/quill.js', 'public/js')
+.css('resources/css/quill.css', 'public/css')
+.postCss('resources/css/app.css', 'public/css',[
+    require('postcss-import'),
+    require('tailwindcss'),
+    require('autoprefixer')
+])
 .quill();

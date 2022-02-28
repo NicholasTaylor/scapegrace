@@ -160,6 +160,11 @@ Route::delete('/admin/destroy-user/{id}', [UserController::class, 'destroy'])
     ->middleware('permission:delete users')
     ->name('user.destroy');
 
+Route::get('/admin/assets', [AssetController::class, 'index'])
+    ->middleware('auth')
+    ->middleware('permission:create articles|edit articles')
+    ->name('asset.index');
+
 Route::get('/admin/upload-asset/{id}', [AssetController::class, 'create'])
     ->middleware('auth')
     ->middleware('permission:create articles|edit articles')

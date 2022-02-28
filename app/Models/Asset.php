@@ -15,4 +15,9 @@ class Asset extends Model
         'media_type',
         'path'
     ];
+
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
 }

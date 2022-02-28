@@ -27,10 +27,10 @@
                 </div>
                 
                 <div>
-                    <label for="image">
-                        {{ __('Choose an Image') }}
+                    <label for="upload">
+                        {{ __('Choose an image') }}
                     </label>
-                    <input id="image" type="file" name="image" value="" />
+                    <input id="upload" type="file" name="upload" value="" />
                 </div>
                 
 
