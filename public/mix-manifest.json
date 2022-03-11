@@ -1,5 +1,5 @@
 {
-    "/js/quill.js": "/js/quill.js",
-    "/css/quill.css": "/css/quill.css",
-    "/css/app.css": "/css/app.css"
+    "/js/ckEditor.css": "/js/ckEditor.css",
+    "/css/styles.css": "/css/styles.css",
+    "/js/ckEditor.js": "/js/ckEditor.js"
 }

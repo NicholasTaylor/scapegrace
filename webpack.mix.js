@@ -1,23 +1,13 @@
 const mix = require('laravel-mix');
 const path = require('path');
+const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
 
-mix.extend('quill', webpackConfig => {
+mix.extend('ckeditor', webpackConfig => {
     const { rules } = webpackConfig.module;
-
-    // 1. Exclude quill's SVG icons from existing rules
     rules.filter(rule => /svg/.test(rule.test.toString()))
-        .forEach(rule => rule.exclude = /quill/);
-
-    // 2. Instead, use html-loader for quill's SVG icons
-    rules.unshift({
-        test: /\.svg$/,
-        include: [path.resolve('./node_modules/quill/assets')],
-        use: [{ loader: 'html-loader', options: { minimize: true } }]
-    });
-
-    // 3. Don't exclude quill from babel-loader rule
-    rules.filter(rule => rule.exclude && rule.exclude.toString() === "/(node_modules|bower_components)/")
-        .forEach(rule => rule.exclude = /node_modules\/(?!(quill)\/).*/);
+    .forEach(rule => rule.exclude = /@ckeditor/);
 });
 
 /*
@@ -30,12 +20,49 @@ mix.extend('quill', webpackConfig => {
  | file for the application as well as bundling up all the JS files.
  |
  */
-
-mix.js('resources/js/quill.js', 'public/js')
-.css('resources/css/quill.css', 'public/css')
-.postCss('resources/css/app.css', 'public/css',[
+mix.ckeditor()
+.webpackConfig({
+    plugins: [
+        new CKEditorWebpackPlugin( {
+            // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
+            language: 'en'
+        } ),
+        
+        new MiniCssExtractPlugin( {
+            filename: 'css/styles.css'
+        } )
+    ],
+    module: {
+        rules: [
+            {
+                test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+                use: [ 'raw-loader' ]
+            },
+            {
+                test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: styles.getPostCssConfig( {
+                                themeImporter: {
+                                    themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
+                                },
+                                minify: true
+                            } )
+                        }
+                    }
+                ],
+                sideEffects: true
+            }
+        ]
+    }
+})
+.js('resources/js/ckEditor.js', 'public/js')
+/*.postCss('resources/css/app.css', 'public/css',[
     require('postcss-import'),
     require('tailwindcss'),
     require('autoprefixer')
-])
-.quill();
+])*/;

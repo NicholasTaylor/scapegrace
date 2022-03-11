@@ -16,10 +16,9 @@
         $prefillHTML = $mode == 'edit' ? $article->body : ''
     ?>
     <head>
-        <!--<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>-->
-        <link rel="stylesheet" href="{{ asset('css/quill.css') }}">
-        <script defer src="{{ asset('js/quill.js') }}"></script>
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <script defer src="{{ asset('js/ckEditor.js') }}"></script>
     </head>
     <body>
         <form method="POST" action="{{ $mode == 'edit' ? route('article.update', $article->id) : route('article.store') }}" />
@@ -131,22 +130,5 @@
                     @endif
             </form>
         </div>
-        <script type="application/javascript">
-            const btnSubmit = document.querySelector('#btn-submit');
-
-            const getImgPath = (e) => {
-                e.preventDefault();
-                const formData = new window.FormData(document.querySelector('#upload-img'));
-                const options = {
-                    method: 'POST',
-                    body: formData
-                }
-                fetch('http://scapegrace.test/admin/upload-asset/', options)
-                    .then(response => response.json())
-                    .then(data => {for (key in data){console.log(`key: ${key}, value: ${data[key]}`)}});
-            }
-
-            btnSubmit.addEventListener('click', getImgPath);
-        </script>
     </body>
 </html>
