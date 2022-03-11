@@ -19,7 +19,22 @@ import CodeBlock, { Code } from 'quill/formats/code';
 import Parchment from 'parchment';
 
 class ImageNew extends Parchment.Embed {
-    //
+    const btnSubmit = document.querySelector('#btn-submit');
+
+    const getImgPath = (e) => {
+        e.preventDefault();
+        const formData = new FormData(document.querySelector('#upload-img'));
+        const options = {
+            method: 'POST',
+            body: formData
+        }
+        delete options.headers['Content-Type'];
+        fetch('http://scapegrace.test/admin/upload-asset/', options)
+            .then(response => response.json())
+            .then(data => console.log(`Testing: ${data}`));
+    }
+
+    btnSubmit.addEventListener('click', getImgPath);
 }
 
 ImageNew.blotName = 'imageNew';
