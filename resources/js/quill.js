@@ -7,6 +7,7 @@ import Bold from 'quill/formats/bold';
 import Italic from 'quill/formats/italic';
 import Underline from 'quill/formats/underline';
 import Header from 'quill/formats/header';
+import Link from 'quill/formats/link';
 import { FontStyle, FontClass } from 'quill/formats/font';
 import { AlignAttribute, AlignClass, AlignStyle } from 'quill/formats/align';
 import Image from 'quill/formats/image';
@@ -15,6 +16,14 @@ import Blockquote from 'quill/formats/blockquote';
 import Strike from 'quill/formats/strike';
 import CodeBlock, { Code } from 'quill/formats/code';
 
+import Parchment from 'parchment';
+
+class ImageNew extends Parchment.Embed {
+    //
+}
+
+ImageNew.blotName = 'imageNew';
+Image.tagName = 'IMGNEW';
 
 Quill.register({
   'modules/toolbar': Toolbar,
@@ -23,6 +32,7 @@ Quill.register({
   'formats/italic': Italic,
   'formats/underline': Underline,
   'formats/strike': Strike,
+  'formats/link': Link,
   'formats/header': Header,
   'formats/font-style': FontStyle,
   'formats/font-class': FontClass,
@@ -45,7 +55,6 @@ const toolbarOptions = [
     [{ 'align': [] }],
     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
     ['clean']
-
 ];
 
 const options = {

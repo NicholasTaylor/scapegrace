@@ -18,11 +18,9 @@ class AssetController extends Controller
         ]);
     }
 
-    public function create($id)
+    public function create()
     {
-        return view('admin.createEditAsset',[
-            'id' => $id
-        ]);
+        return view('admin.createEditAsset');
     }
 
     public function store(Request $request)
@@ -34,15 +32,17 @@ class AssetController extends Controller
         $filename = $filenameBase.'-'.time().'.'.$filenameExt;
         $pathStem = 'assets';
         $path = $pathStem.'/'.$filename;
+        $validatedRequest = $this->validateAsset($request)->all();
+        $validatedRequest['path'] = $path;
         $put = Storage::disk('local')->putFileAs(
             'public/assets',
             $file,
             $filename
         );
-        $validatedRequest = $this->validateAsset($request)->all();
-        $validatedRequest['path'] = $path;
         $asset = Asset::create($validatedRequest);
-        return redirect(RouteServiceProvider::ADMIN);
+        #return redirect(RouteServiceProvider::ADMIN);
+        return response($asset)
+            ->header('Content-Type', 'application/json; charset=UTF-8');
     }
 
     public function edit(){
@@ -55,7 +55,6 @@ class AssetController extends Controller
 
     protected function validateAsset($request){
         $request->validate([
-            'article_id' => ['required', 'string', 'in:'.Article::all()->implode('id', ',')],
             'name' => ['required', 'string', 'max:200'],
             'media_type' => ['required', 'string', 'max:200', 'in:image']
         ]);

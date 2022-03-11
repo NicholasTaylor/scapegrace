@@ -165,15 +165,23 @@ Route::get('/admin/assets', [AssetController::class, 'index'])
     ->middleware('permission:create articles|edit articles')
     ->name('asset.index');
 
+Route::get('/admin/upload-asset/', [AssetController::class, 'create'])
+    ->middleware('auth')
+    ->name('asset.create');
+
 Route::get('/admin/upload-asset/{id}', [AssetController::class, 'create'])
     ->middleware('auth')
     ->middleware('permission:create articles|edit articles')
-    ->name('asset.create');
+    ->name('asset.createFromArticle');
+
+Route::post('/admin/upload-asset/', [AssetController::class, 'store'])
+    ->middleware('auth')
+    ->name('asset.store');
 
 Route::post('/admin/upload-asset/{id}', [AssetController::class, 'store'])
     ->middleware('auth')
     ->middleware('permission:create articles|edit articles')
-    ->name('asset.store');
+    ->name('asset.storeFromArticle');
 
 Route::get('/admin/edit-asset/{id}', [AssetController::class, 'edit'])
     ->middleware('auth')

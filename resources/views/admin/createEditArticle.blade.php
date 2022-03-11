@@ -80,7 +80,7 @@
                     <label for="published_at">
                         {{ __('Publish Date') }}
                     </label>
-                    <input id="published_at" type="datetime-local" name="published_at" value="{{ $mode == 'edit' ? $article->published_at : $currentTime }}" required />
+                    <input id="published_at" type="datetime-local" name="published_at" required value="{{ $mode == 'edit' ? date( 'Y-m-d\TH:i:s', strtotime( $article->published_at ) ) : $currentTime }}">
                 </div>
 
                 <div>
@@ -95,5 +95,58 @@
                     @endforeach
                 @endif
         </form>
+
+        <div id="test">
+            <form id="upload-img" />
+                @csrf
+                    <input type="hidden" id="media_type" name="media_type" value="image">
+                    <h1>
+                        Asset Upload Proof of Concept
+                    </h1>
+                    <div>
+                        <label for="name">
+                            {{ __('Name') }}
+                        </label>
+                        <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus />
+                    </div>
+                    
+                    <div>
+                        <label for="upload">
+                            {{ __('Choose an image') }}
+                        </label>
+                        <input id="upload" type="file" name="upload" value="" />
+                    </div>
+                    
+
+                    <div>
+                        <button id="btn-submit">
+                            Upload
+                        </button>
+                    </div>
+
+                    @if($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    @endif
+            </form>
+        </div>
+        <script type="application/javascript">
+            const btnSubmit = document.querySelector('#btn-submit');
+
+            const getImgPath = (e) => {
+                e.preventDefault();
+                const formData = new window.FormData(document.querySelector('#upload-img'));
+                const options = {
+                    method: 'POST',
+                    body: formData
+                }
+                fetch('http://scapegrace.test/admin/upload-asset/', options)
+                    .then(response => response.json())
+                    .then(data => {for (key in data){console.log(`key: ${key}, value: ${data[key]}`)}});
+            }
+
+            btnSubmit.addEventListener('click', getImgPath);
+        </script>
     </body>
 </html>

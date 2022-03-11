@@ -7,12 +7,11 @@
     </head>
     <body>
         <form 
-            method="POST" action="{{ $mode == 'edit' ? route('asset.update', $id) : route('asset.store', $id) }}" enctype="multipart/form-data" />
+            method="POST" action="{{ $mode == 'edit' ? route('asset.update', $id) : route('asset.store') }}" enctype="multipart/form-data" />
             @if ($mode == 'edit')
                 @method('PATCH')
             @endif
             @csrf
-                <input type="hidden" id="article_id" name="article_id" value="1">
                 <input type="hidden" id="media_type" name="media_type" value="image">
 
                 <h1>
@@ -23,7 +22,7 @@
                     <label for="name">
                         {{ __('Name') }}
                     </label>
-                    <input id="name" type="text" name="name" value="{{ $mode == 'edit' ? $article->title : old('name') }}" required autofocus />
+                    <input id="name" type="text" name="name" value="{{ $mode == 'edit' ? $asset->title : old('name') }}" required autofocus />
                 </div>
                 
                 <div>

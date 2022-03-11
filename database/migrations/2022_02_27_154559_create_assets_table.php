@@ -15,13 +15,10 @@ return new class extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('article_id')->nullable();
             $table->string('name', 200)->nullable();
             $table->string('media_type', 200)->nullable();
             $table->string('path', 500)->nullable();
             $table->timestamps();
-
-            $table->foreign('article_id')->references('id')->on('articles')->cascadeOnDelete();
         });
     }
 
