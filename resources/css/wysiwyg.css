@@ -1,0 +1,20 @@
+.wysiwyg__toolbarRow {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+}
+
+.wysiwyg__toolbarIcon {
+    flex: 0 0 1.75rem;
+    border: 1px solid #202020;
+    padding: .25rem;
+}
+
+.wysiwyg__toolbarIcon img {
+    width: 1.75rem;
+    height: auto;
+}
+
+.wysiwyg__contentArea--html {
+    display: none;
+}

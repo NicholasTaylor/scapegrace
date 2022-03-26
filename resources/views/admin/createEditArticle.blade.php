@@ -17,8 +17,7 @@
     ?>
     <head>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-        <script defer src="{{ asset('js/ckEditor.js') }}"></script>
+        <link rel="stylesheet" href="{{ asset('css/wysiwyg.css') }}">
     </head>
     <body>
         <form method="POST" action="{{ $mode == 'edit' ? route('article.update', $article->id) : route('article.store') }}" />
@@ -57,8 +56,54 @@
                 </div>
                 
                 <div>
-                    <div id="body">
-                        {!! $prefillHTML !!}
+                    <div id="body" class="wysiwyg">
+                        <div class="wysiwyg__toolbar">
+                            <div class="wysiwyg__toolbarRow">
+                                <span class="wysiwyg__toolbarIcon wysiwyg__btn" data-action="bold" data-tag-name="strong" title="Bold">
+                                    <img src="{{ asset('wysiwyg-assets/bold.svg') }}" />
+                                </span>
+                                <span class="wysiwyg__toolbarIcon wysiwyg__btn" data-action="italic" data-tag-name="em" title="Italic">
+                                    <img src="{{ asset('wysiwyg-assets/italic.svg') }}" />
+                                </span>
+                                <span class="wysiwyg__toolbarIcon wysiwyg__btn" data-action="underline" data-tag-name="u" title="Underline">
+                                    <img src="{{ asset('wysiwyg-assets/underline.svg') }}" />
+                                </span>
+                                <span class="wysiwyg__toolbarIcon wysiwyg__btn" data-action="strikethrough" data-tag-name="strike" title="Strikethrough">
+                                    <img src="{{ asset('wysiwyg-assets/strikethrough.svg') }}" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="wysiwyg__toolbar">
+                            <div class="wysiwyg__toolbarRow">
+                                <span class="wysiwyg__toolbarIcon wysiwyg__btn" data-action="createLink" data-tag-name="a" title="Link">
+                                    <img src="{{ asset('wysiwyg-assets/link.svg') }}" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="wysiwyg__contentArea">
+                            <div class="wysiwyg__contentArea--visual" contenteditable>
+                                {!! $prefillHTML !!}
+                            </div>
+                            <textarea class="wysiwyg__contentArea--html">
+                                {!! $prefillHTML !!}
+                            </textarea>
+                        </div>
+                        <div class="wysiwyg__Modal">
+                            <div class="wysiwyg__ModalLink">
+                                <div class="wysiwyg__ModalLinkContainer">
+                                    <div class="wysiwygModal__close">
+                                    </div>
+                                    <div class="wysiwyg__ModalLinkContent">
+                                        <h2>Add a Link</h2>
+                                        <input type="text" id="linkValue" placeholder="https://www.something.com">
+                                        <label for="linkValue">Link URL</label>
+                                        <input type="checkbox" id="new-tab">
+                                        <label for="new-tab">Open in new Tab?</label>
+                                        <button class="done">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 

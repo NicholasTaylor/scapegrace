@@ -15,7 +15,8 @@ import ImageUploadPlugin from '@ckeditor/ckeditor5-image/src/imageupload';
 import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
 import ListPlugin from '@ckeditor/ckeditor5-list/src/list';
 import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import CloudServices from '@ckeditor/ckeditor5-cloud-services/src/cloudservices'
+import CloudServices from '@ckeditor/ckeditor5-cloud-services/src/cloudservices';
+import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
 
 ClassicEditor
     .create( document.querySelector( '#body'), {
@@ -37,7 +38,8 @@ ClassicEditor
             ListPlugin,
             ParagraphPlugin,
             UploadAdapterPlugin,
-            CloudServices
+            CloudServices,
+            CKFinder
         ],
 
         // So is the rest of the default configuration.
@@ -62,6 +64,12 @@ ClassicEditor
                 'toggleImageCaption',
                 'imageTextAlternative'
             ]
+        },
+        ckfinder: {
+            uploadUrl: 'http://scapegrace.test/admin/upload-asset/'
+        },
+        options: {
+            resourceType: 'Images'
         }
     } )
     .then( editor => {

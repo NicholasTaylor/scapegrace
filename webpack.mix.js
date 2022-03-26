@@ -1,14 +1,15 @@
 const mix = require('laravel-mix');
-const path = require('path');
-const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
+//const path = require('path');
+//const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
+//const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+//const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
 
-mix.extend('ckeditor', webpackConfig => {
+/*mix.extend('ckeditor', webpackConfig => {
     const { rules } = webpackConfig.module;
     rules.filter(rule => /svg/.test(rule.test.toString()))
     .forEach(rule => rule.exclude = /@ckeditor/);
 });
+*/
 
 /*
  |--------------------------------------------------------------------------
@@ -20,14 +21,13 @@ mix.extend('ckeditor', webpackConfig => {
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.ckeditor()
+/*mix.ckeditor()
 .webpackConfig({
     plugins: [
         new CKEditorWebpackPlugin( {
             // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
             language: 'en'
         } ),
-        
         new MiniCssExtractPlugin( {
             filename: 'css/styles.css'
         } )
@@ -59,10 +59,12 @@ mix.ckeditor()
             }
         ]
     }
-})
-.js('resources/js/ckEditor.js', 'public/js')
-/*.postCss('resources/css/app.css', 'public/css',[
+})*/
+mix.ts('resources/ts/wysiwyg.ts', 'public/js')
+.copy('resources/wysiwyg-assets', 'public/wysiwyg-assets')
+.copy('resources/css/wysiwyg.css', 'public/css')
+.postCss('resources/css/app.css', 'public/css',[
     require('postcss-import'),
     require('tailwindcss'),
     require('autoprefixer')
-])*/;
+]);
