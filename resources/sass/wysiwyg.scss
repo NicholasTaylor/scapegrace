@@ -1,0 +1,66 @@
+@use 'node_modules/modern-normalize/modern-normalize.css';
+$size7: 3.052rem;
+$size6: 2.441rem;
+$size5: 1.953rem;
+$size4: 1.563rem;
+$size3: 1.25rem;
+$size2: 1rem;
+$size1: .8rem;
+
+
+.wysiwyg__toolbarRow
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+}
+
+.wysiwyg__toolbarIcon 
+{
+    flex: 0 0 1.75rem;
+    border: 1px solid #202020;
+    padding: .25rem;
+    img {
+        width: 1.75rem;
+        height: auto;
+    }
+}
+
+.wysiwyg__contentArea 
+{
+    font-size: $size2;
+    margin: $size3 $size3 $size3 0;
+    padding: $size1;
+    border: 2px dotted #808080;
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+        margin: 0 0 $size1 0;
+    }    
+    h1 {
+        font-size: $size7;
+    }
+    h2 {
+        font-size: $size6;
+    }
+    h3 {
+        font-size: $size5;
+    }
+    h4 {
+        font-size: $size4;
+    }
+    h5 {
+        font-size: $size3;
+    }
+    p {
+        margin: 0 0 $size1 0;
+    }
+    blockquote {
+        margin: $size2 0 $size2 0;
+        padding: 0 0 0 $size2;
+        font-size: $size1;
+        border-left: dotted 6px #808080;
+    }
+    &--html {
+        display: none;
+    }
+}
