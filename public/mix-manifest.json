@@ -1,6 +1,8 @@
 {
-    "/js/wysiwyg.js": "/js/wysiwyg.js",
+    "/js/editArticle.js": "/js/editArticle.js",
+    "/js/editArticleIndex.js": "/js/editArticleIndex.js",
     "/css/app.css": "/css/app.css",
+    "/css/wysiwyg.css": "/css/wysiwyg.css",
     "/wysiwyg-assets/align-bottom.svg": "/wysiwyg-assets/align-bottom.svg",
     "/wysiwyg-assets/align-center.svg": "/wysiwyg-assets/align-center.svg",
     "/wysiwyg-assets/align-justify.svg": "/wysiwyg-assets/align-justify.svg",
@@ -78,6 +80,5 @@
     "/wysiwyg-assets/twitter.svg": "/wysiwyg-assets/twitter.svg",
     "/wysiwyg-assets/underline.svg": "/wysiwyg-assets/underline.svg",
     "/wysiwyg-assets/undo.svg": "/wysiwyg-assets/undo.svg",
-    "/wysiwyg-assets/unlink.svg": "/wysiwyg-assets/unlink.svg",
-    "/css/wysiwyg.css": "/css/wysiwyg.css"
+    "/wysiwyg-assets/unlink.svg": "/wysiwyg-assets/unlink.svg"
 }
