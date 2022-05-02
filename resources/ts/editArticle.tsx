@@ -43,19 +43,50 @@ export default function editArticle(props: ArticleProps){
         setBody(e.target.value!);
     }
 
+    const addTag: Function = (event: React.ChangeEvent<HTMLButtonElement>, tagName: string) => {
+        const sel = window.getSelection();
+        const range = sel?.getRangeAt(0);
+        const original: string = sel?.toString()!;
+        const repl: Element = document.createElement(tagName);
+
+        range?.deleteContents();
+        repl.innerHTML = original;
+        range?.insertNode(repl);
+
+    }
+
     return(
-        <div>
-            Hello world!<br/>
+        <div
+            css={css`
+                .wysiwyg {
+                    &__toolbarRow {
+                        display: flex;
+                        flex-flow: row nowrap;
+                        justify-content: flex-start;
+                    }
+                    &__toolbarIcon {
+                        flex: 0 0 1.75rem;
+                        border: 1px solid #202020;
+                        padding: .25rem;
+                        img {
+                            width: 1.75rem;
+                            height: auto;
+                        }
+                    }
+                }
+            `}
+        >
             <div
+                id="body"
+                className="wysiwyg"
                 css={css`
                     font-size: ${size[1]};
                     margin: ${size[2]} ${size[2]} ${size[2]} 0;
                     padding: ${size[0]};
-                    border: 2px dotted #808080;
                     h1, h2, h3, h4, h5, h6 {
                         font-weight: bold;
                         margin: 0 0 ${size[0]} 0;
-                    }    
+                    }
                     h1 {
                         font-size: ${size[6]};
                     }
@@ -82,9 +113,79 @@ export default function editArticle(props: ArticleProps){
                     }
                 `}
             >
+                <div
+                    className="wysiwyg__toolbar"
+                >
+                    <div
+                        className="wysiwyg__toolbarRow"
+                    >
+                        <span
+                            className="wysiwyg__toolbarIcon wysiwyg__btn"
+                            data-action="bold"
+                            data-tag-name="strong"
+                            onClick={(e) => addTag(e,'strong')}
+                            title="Bold"
+                        >
+                            <img
+                                src="/wysiwyg-assets/bold.svg"
+                            />
+                        </span>
+                        <span
+                            className="wysiwyg__toolbarIcon wysiwyg__btn"
+                            data-action="italic"
+                            data-tag-name="em"
+                            title="Italic"
+                        >
+                            <img
+                                src="/wysiwyg-assets/italic.svg"
+                            />
+                        </span>
+                        <span
+                            className="wysiwyg__toolbarIcon wysiwyg__btn"
+                            data-action="underline"
+                            data-tag-name="u"
+                            title="Underline"
+                        >
+                            <img
+                                src="/wysiwyg-assets/underline.svg"
+                            />
+                        </span>
+                        <span
+                            className="wysiwyg__toolbarIcon wysiwyg__btn"
+                            data-action="strikethrough"
+                            data-tag-name="strike"
+                            title="Strikethrough"
+                        >
+                            <img
+                                src="/wysiwyg-assets/strikethrough.svg"
+                            />
+                        </span>
+                    </div>
+                </div>
+                <div
+                    className="wysiwyg__toolbar"
+                >
+                    <div
+                        className="wysiwyg__toolbarRow"
+                    >
+                        <span
+                            className="wysiwyg__toolbarIcon wysiwyg__btn"
+                            data-action="createLink"
+                            data-tag-name="a"
+                            title="Link"
+                        >
+                            <img
+                                src="/wysiwyg-assets/link.svg"
+                            />
+                        </span>
+                    </div>
+                </div>
                 <ContentEditable
                     onChange={useCallback((e) => {handleWYSIWYG(e)},[body])}
                     html={body}
+                    css={css`
+                        border: 2px dotted #808080;
+                    `}
                 />
             </div>
         </div>
