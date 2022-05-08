@@ -1,59 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect, useCallback } from 'react';
 import { css } from '@emotion/react';
-import ContentEditable from 'react-contenteditable';
+import Wysiwyg from './wysiwyg';
 import 'modern-normalize';
 
-interface Article {
-    id?: Number,
-    user_id?: Number,
-    title?: String,
-    slug?: String,
-    excerpt?: String,
-    body?: string,
-    category_id?: Number,
-    tags?: Array<Number>,
-    published?: Number | Date,
-    published_at?: Date,
-    created_at?: Date,
-    updated_at?: Date
-}
-interface ArticleProps {
+interface DataProps {
     article?: string
 }
 
-export default function editArticle(props: ArticleProps){
-    const articleInit: Article = JSON.parse(props.article!);
-    const [id, setId] = useState(articleInit.id!);
-    const [user_id, setUser_id] = useState(articleInit.user_id!);
-    const [title, setTitle] = useState(articleInit.title!);
-    const [slug, setSlug] = useState(articleInit.slug!);
-    const [excerpt, setExcerpt] = useState(articleInit.excerpt!);
-    const [body, setBody] = useState(articleInit.body!);
-    const [category_id, setCategory_id] = useState(articleInit.category_id!);
-    const [tags, setTags] = useState(articleInit.tags!);
-    const [published, setPublished] = useState(articleInit.published!);
-    const [published_at, setPublished_at] = useState(articleInit.published_at!);
-    const [created_at, setCreated_at] = useState(articleInit.created_at!);
-    const [updated_at, setUpdated_at] = useState(articleInit.updated_at!);
-    
+export default function editArticle(props: DataProps){
+    const article: string = props.article!;
     const size = [.8, 1, 1.25, 1.563, 1.953, 2.441, 3.052].map((n) => `${n}rem`);
-
-    const handleWYSIWYG: Function = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setBody(e.target.value!);
-    }
-
-    const addTag: Function = (event: React.ChangeEvent<HTMLButtonElement>, tagName: string) => {
-        const sel = window.getSelection();
-        const range = sel?.getRangeAt(0);
-        const original: string = sel?.toString()!;
-        const repl: Element = document.createElement(tagName);
-
-        range?.deleteContents();
-        repl.innerHTML = original;
-        range?.insertNode(repl);
-
-    }
 
     return(
         <div
@@ -123,7 +79,6 @@ export default function editArticle(props: ArticleProps){
                             className="wysiwyg__toolbarIcon wysiwyg__btn"
                             data-action="bold"
                             data-tag-name="strong"
-                            onClick={(e) => addTag(e,'strong')}
                             title="Bold"
                         >
                             <img
@@ -180,13 +135,15 @@ export default function editArticle(props: ArticleProps){
                         </span>
                     </div>
                 </div>
-                <ContentEditable
-                    onChange={useCallback((e) => {handleWYSIWYG(e)},[body])}
-                    html={body}
+                <div
                     css={css`
                         border: 2px dotted #808080;
                     `}
-                />
+                >
+                    <Wysiwyg
+                        initValue = {article}
+                    />
+                </div>
             </div>
         </div>
     )

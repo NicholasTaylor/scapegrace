@@ -52,7 +52,7 @@
                 </div>
                 
                 <div>
-                    <div id="editArticle" data-article="{{ $article }}"></div>
+                    <div id="editArticle" data-article="{{ $prefillHTML }}"></div>
                     <div class="wysiwyg__Modal">
                         <div class="wysiwyg__ModalLink">
                             <div class="wysiwyg__ModalLinkContainer">
