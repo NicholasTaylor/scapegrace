@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { createEditor, BaseEditor, Descendant } from 'slate';
 import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
 
@@ -24,7 +24,7 @@ declare module 'slate' {
 }
 
 const Wysiwyg = (props: WysiwygProps) => {
-    const [editor] = useState(() => withReact(createEditor()));
+    const editor = useMemo(() => withReact(createEditor()), []);
     const initialValue: Descendant[] = [
         {
             type: 'paragraph',
@@ -35,18 +35,29 @@ const Wysiwyg = (props: WysiwygProps) => {
 
         }
     ];
+    const renderElement = useCallback(props => {
+        switch (props.element.type) {
+            default:
+                return <DefaultElement {...props} />
+        }
+    }, [])
     return (
         <Slate 
             editor={editor} 
             value={initialValue}
         >
             <Editable
+                renderElement={renderElement}
                 onKeyDown={event => {
                     console.log(event.key)
                 }}
             />
         </Slate>
     )
+}
+
+const DefaultElement = (props: HTMLElement) => {
+    return <p {...props.attributes}>{props.children}</p>
 }
 
 /*
