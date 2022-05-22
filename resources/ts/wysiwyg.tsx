@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { createEditor, BaseEditor, Descendant } from 'slate';
-import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
+import { createEditor, BaseEditor, Descendant, Transforms, Text, Editor, Element } from 'slate';
+import { Slate, Editable, withReact, ReactEditor, RenderLeafProps} from 'slate-react';
+import { node } from 'webpack';
 
 interface WysiwygProps {
     initValue: string
@@ -8,12 +9,15 @@ interface WysiwygProps {
 
 type CustomElement = { 
     type: 'paragraph'; 
-    children: CustomText[]; 
+    children: CustomText[];
 }
 
-type CustomText = {
-    text: string
+type FormattedText = {
+    text: string;
+    bold?: boolean | null
 }
+
+type CustomText = FormattedText
 
 declare module 'slate' {
     interface CustomTypes {
@@ -24,7 +28,7 @@ declare module 'slate' {
 }
 
 const Wysiwyg = (props: WysiwygProps) => {
-    const editor = useMemo(() => withReact(createEditor()), []);
+    const editor = useMemo(() => withReact(createEditor()), [])
     const initialValue: Descendant[] = [
         {
             type: 'paragraph',
@@ -41,6 +45,26 @@ const Wysiwyg = (props: WysiwygProps) => {
                 return <DefaultElement {...props} />
         }
     }, [])
+    const renderLeaf = useCallback(props => {
+        return <Leaf {...props} />
+    }, [])
+    const CustomEditor = {
+        isBoldMarkActive(editor: Editor){
+            const [match] = Editor.nodes(
+                editor, 
+                {match: n => Text.isText(n) && n.bold === true, universal: true}
+            )
+            return !!match
+        },
+        toggleBoldMark(editor: Editor){
+            const isActive = CustomEditor.isBoldMarkActive(editor)
+            Transforms.setNodes(
+                editor,
+                {bold: isActive ? null : true},
+                {match: n => Text.isText(n), split: true}
+            )
+        }
+    }
     return (
         <Slate 
             editor={editor} 
@@ -48,8 +72,19 @@ const Wysiwyg = (props: WysiwygProps) => {
         >
             <Editable
                 renderElement={renderElement}
+                renderLeaf={renderLeaf}
                 onKeyDown={event => {
-                    console.log(event.key)
+                    let heldKey = window.navigator.userAgent.indexOf('Mac OS') !== -1 ? event.metaKey : event.ctrlKey;
+                    if (!heldKey){
+                        return;
+                    }
+                    switch (event.key){
+                        case 'b': {
+                            event.preventDefault();
+                            CustomEditor.toggleBoldMark(editor);
+                            break;
+                        }
+                    }
                 }}
             />
         </Slate>
@@ -58,6 +93,17 @@ const Wysiwyg = (props: WysiwygProps) => {
 
 const DefaultElement = (props: HTMLElement) => {
     return <p {...props.attributes}>{props.children}</p>
+}
+
+const Leaf = (props: RenderLeafProps) => {
+    return (
+        <span
+            {...props.attributes}
+            style={{ fontWeight: props.leaf.bold ? 'bold' : 'normal' }}
+        >
+            {props.children}
+        </span>
+    )
 }
 
 /*
