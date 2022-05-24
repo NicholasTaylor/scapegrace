@@ -14,7 +14,10 @@ type CustomElement = {
 
 type FormattedText = {
     text: string;
-    bold?: boolean | null
+    bold?: boolean | null,
+    italic?: boolean | null,
+    underline?: boolean | null,
+    strikethrough?: boolean | null,
 }
 
 type CustomText = FormattedText
@@ -49,18 +52,18 @@ const Wysiwyg = (props: WysiwygProps) => {
         return <Leaf {...props} />
     }, [])
     const CustomEditor = {
-        isBoldMarkActive(editor: Editor){
+        isMarkActive(editor: Editor, mark: string){
             const [match] = Editor.nodes(
                 editor, 
-                {match: n => Text.isText(n) && n.bold === true, universal: true}
+                {match: n => Text.isText(n) && n[mark as keyof typeof n] === true, universal: true}
             )
             return !!match
         },
-        toggleBoldMark(editor: Editor){
-            const isActive = CustomEditor.isBoldMarkActive(editor)
+        toggleMark(editor: Editor, mark: string){
+            const isActive = CustomEditor.isMarkActive(editor, mark)
             Transforms.setNodes(
                 editor,
-                {bold: isActive ? null : true},
+                {[mark]: isActive ? null : true},
                 {match: n => Text.isText(n), split: true}
             )
         }
@@ -81,7 +84,17 @@ const Wysiwyg = (props: WysiwygProps) => {
                     switch (event.key){
                         case 'b': {
                             event.preventDefault();
-                            CustomEditor.toggleBoldMark(editor);
+                            CustomEditor.toggleMark(editor, 'bold');
+                            break;
+                        }
+                        case 'i': {
+                            event.preventDefault();
+                            CustomEditor.toggleMark(editor, 'italic');
+                            break;
+                        }
+                        case 'u': {
+                            event.preventDefault();
+                            CustomEditor.toggleMark(editor, 'underline');
                             break;
                         }
                     }
@@ -95,11 +108,27 @@ const DefaultElement = (props: HTMLElement) => {
     return <p {...props.attributes}>{props.children}</p>
 }
 
+const checkTextDecoration = (underline: boolean | undefined | null, strikethrough: boolean | undefined | null) => {
+    if (underline && strikethrough){
+        return 'line-through underline';
+    } else if (underline) {
+        return 'underline';
+    } else if (strikethrough) {
+        return 'line-through';
+    } else {
+        return 'none';
+    }
+}
+
 const Leaf = (props: RenderLeafProps) => {
     return (
         <span
             {...props.attributes}
-            style={{ fontWeight: props.leaf.bold ? 'bold' : 'normal' }}
+            style={{ 
+                fontWeight: props.leaf.bold ? 'bold' : 'normal', 
+                fontStyle: props.leaf.italic ? 'italic' : 'normal',
+                textDecoration: checkTextDecoration(props.leaf.underline, props.leaf.strikethrough)
+            }}
         >
             {props.children}
         </span>
