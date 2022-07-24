@@ -68,73 +68,7 @@ export default function editArticle(props: DataProps){
                         border-left: dotted 6px #808080;
                     }
                 `}
-            >
-                <div
-                    className="wysiwyg__toolbar"
-                >
-                    <div
-                        className="wysiwyg__toolbarRow"
-                    >
-                        <span
-                            className="wysiwyg__toolbarIcon wysiwyg__btn"
-                            data-action="bold"
-                            data-tag-name="strong"
-                            title="Bold"
-                        >
-                            <img
-                                src="/wysiwyg-assets/bold.svg"
-                            />
-                        </span>
-                        <span
-                            className="wysiwyg__toolbarIcon wysiwyg__btn"
-                            data-action="italic"
-                            data-tag-name="em"
-                            title="Italic"
-                        >
-                            <img
-                                src="/wysiwyg-assets/italic.svg"
-                            />
-                        </span>
-                        <span
-                            className="wysiwyg__toolbarIcon wysiwyg__btn"
-                            data-action="underline"
-                            data-tag-name="u"
-                            title="Underline"
-                        >
-                            <img
-                                src="/wysiwyg-assets/underline.svg"
-                            />
-                        </span>
-                        <span
-                            className="wysiwyg__toolbarIcon wysiwyg__btn"
-                            data-action="strikethrough"
-                            data-tag-name="strike"
-                            title="Strikethrough"
-                        >
-                            <img
-                                src="/wysiwyg-assets/strikethrough.svg"
-                            />
-                        </span>
-                    </div>
-                </div>
-                <div
-                    className="wysiwyg__toolbar"
-                >
-                    <div
-                        className="wysiwyg__toolbarRow"
-                    >
-                        <span
-                            className="wysiwyg__toolbarIcon wysiwyg__btn"
-                            data-action="createLink"
-                            data-tag-name="a"
-                            title="Link"
-                        >
-                            <img
-                                src="/wysiwyg-assets/link.svg"
-                            />
-                        </span>
-                    </div>
-                </div>
+            >                
                 <div
                     css={css`
                         border: 2px dotted #808080;

@@ -1,7 +1,8 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import React, { useState, useMemo, useCallback } from 'react';
 import { createEditor, BaseEditor, Descendant, Transforms, Text, Editor, Element } from 'slate';
 import { Slate, Editable, withReact, ReactEditor, RenderLeafProps} from 'slate-react';
-import { node } from 'webpack';
 
 interface WysiwygProps {
     initValue: string
@@ -72,7 +73,92 @@ const Wysiwyg = (props: WysiwygProps) => {
         <Slate 
             editor={editor} 
             value={initialValue}
+            onChange={(value) => {
+                console.log(value);
+            }}
         >
+            <div
+                className="wysiwyg__toolbar"
+            >
+                <div
+                    className="wysiwyg__toolbarRow"
+                >
+                    <span
+                        className="wysiwyg__toolbarIcon wysiwyg__btn"
+                        data-action="bold"
+                        data-tag-name="strong"
+                        title="Bold"
+                        onClick={(event) => {
+                            event.preventDefault();
+                            CustomEditor.toggleMark(editor, 'bold');
+                        }}
+                    >
+                        <img
+                            src="/wysiwyg-assets/bold.svg"
+                        />
+                    </span>
+                    <span
+                        className="wysiwyg__toolbarIcon wysiwyg__btn"
+                        data-action="italic"
+                        data-tag-name="em"
+                        title="Italic"
+                        onClick={(event) => {
+                            event.preventDefault();
+                            CustomEditor.toggleMark(editor, 'italic');
+                        }}
+                    >
+                        <img
+                            src="/wysiwyg-assets/italic.svg"
+                        />
+                    </span>
+                    <span
+                        className="wysiwyg__toolbarIcon wysiwyg__btn"
+                        data-action="underline"
+                        data-tag-name="u"
+                        title="Underline"
+                        onClick={(event) => {
+                            event.preventDefault();
+                            CustomEditor.toggleMark(editor, 'underline');
+                        }}
+                    >
+                        <img
+                            src="/wysiwyg-assets/underline.svg"
+                        />
+                    </span>
+                    <span
+                        className="wysiwyg__toolbarIcon wysiwyg__btn"
+                        data-action="strikethrough"
+                        data-tag-name="strike"
+                        title="Strikethrough"
+                        onClick={(event) => {
+                            event.preventDefault();
+                            CustomEditor.toggleMark(editor, 'strikethrough');
+                        }}
+                    >
+                        <img
+                            src="/wysiwyg-assets/strikethrough.svg"
+                        />
+                    </span>
+                </div>
+            </div>
+            <div
+                className="wysiwyg__toolbar"
+            >
+                <div
+                    className="wysiwyg__toolbarRow"
+                >
+                    <span
+                        className="wysiwyg__toolbarIcon wysiwyg__btn"
+                        data-action="createLink"
+                        data-tag-name="a"
+                        title="Link"
+                    >
+                        <img
+                            src="/wysiwyg-assets/link.svg"
+                        />
+                    </span>
+                </div>
+            </div>
             <Editable
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
