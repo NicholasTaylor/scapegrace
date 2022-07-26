@@ -74,7 +74,7 @@ const Wysiwyg = (props: WysiwygProps) => {
             editor={editor} 
             value={initialValue}
             onChange={(value) => {
-                console.log(value);
+                console.log(JSON.stringify(value));
             }}
         >
             <div
@@ -206,6 +206,21 @@ const checkTextDecoration = (underline: boolean | undefined | null, strikethroug
     }
 }
 
+const getTagName = (props: RenderLeafProps) => {
+    if (!props.leaf){
+        return;
+    }
+    let tags = Object.keys(props.leaf);
+    let txtIdx = tags.indexOf('text');
+    if (txtIdx > -1){
+        tags.splice(txtIdx, 1);
+    }
+    if (tags.length === 0){
+        return;
+    }
+    return tags.join(' ');
+}
+
 const Leaf = (props: RenderLeafProps) => {
     return (
         <span
@@ -215,6 +230,7 @@ const Leaf = (props: RenderLeafProps) => {
                 fontStyle: props.leaf.italic ? 'italic' : 'normal',
                 textDecoration: checkTextDecoration(props.leaf.underline, props.leaf.strikethrough)
             }}
+            data-tags={getTagName(props)}
         >
             {props.children}
         </span>
