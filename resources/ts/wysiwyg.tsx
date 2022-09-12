@@ -3,6 +3,11 @@ import { css } from '@emotion/react';
 import React, { useState, useMemo, useCallback } from 'react';
 import { createEditor, BaseEditor, Descendant, Transforms, Text, Editor, Element } from 'slate';
 import { Slate, Editable, withReact, ReactEditor, RenderLeafProps} from 'slate-react';
+import bold from '@/wysiwyg-assets/bold.svg';
+import italic from '@/wysiwyg-assets/italic.svg';
+import underline from '@/wysiwyg-assets/underline.svg';
+import strikethrough from '@/wysiwyg-assets/strikethrough.svg';
+import link from '@/wysiwyg-assets/link.svg';
 
 interface WysiwygProps {
     initValue: string
@@ -94,7 +99,7 @@ const Wysiwyg = (props: WysiwygProps) => {
                         }}
                     >
                         <img
-                            src="/wysiwyg-assets/bold.svg"
+                            src={bold}
                         />
                     </span>
                     <span
@@ -108,7 +113,7 @@ const Wysiwyg = (props: WysiwygProps) => {
                         }}
                     >
                         <img
-                            src="/wysiwyg-assets/italic.svg"
+                            src={italic}
                         />
                     </span>
                     <span
@@ -122,7 +127,7 @@ const Wysiwyg = (props: WysiwygProps) => {
                         }}
                     >
                         <img
-                            src="/wysiwyg-assets/underline.svg"
+                            src={underline}
                         />
                     </span>
                     <span
@@ -136,7 +141,7 @@ const Wysiwyg = (props: WysiwygProps) => {
                         }}
                     >
                         <img
-                            src="/wysiwyg-assets/strikethrough.svg"
+                            src={strikethrough}
                         />
                     </span>
                 </div>
@@ -154,7 +159,7 @@ const Wysiwyg = (props: WysiwygProps) => {
                         title="Link"
                     >
                         <img
-                            src="/wysiwyg-assets/link.svg"
+                            src={link}
                         />
                     </span>
                 </div>

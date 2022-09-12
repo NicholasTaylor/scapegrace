@@ -13,7 +13,8 @@
         $prefillHTML = $mode == 'edit' ? $article->body : ''
     ?>
     <head>
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <!-- CSS -->
+        @vite('resources/css/app.css')
     </head>
     <body>
         <form method="POST" action="{{ $mode == 'edit' ? route('article.update', $article->id) : route('article.store') }}" />
@@ -139,6 +140,9 @@
                     @endif
             </form>
         </div>
+        <!-- Scripts -->
+        @viteReactRefresh
+        @vite('resources/ts/editArticleIndex.tsx')
         <script type="application/javascript" src="{{ asset('js/editArticleIndex.js') }}"></script>
     </body>
 </html>

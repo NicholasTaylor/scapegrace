@@ -1,8 +1,8 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import EditArticle from './editArticle';
 
-const container = document.getElementById('editArticle');
+const container = document.getElementById('editArticle')!;
 const props = Object.assign({}, container?.dataset)
-
-render(<EditArticle {...props}/>, container);
+const root = createRoot(container);
+root.render(<EditArticle {...props}/>);
