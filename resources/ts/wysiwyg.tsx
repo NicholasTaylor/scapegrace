@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { createEditor, BaseEditor, Descendant, Transforms, Text, Editor, Element } from 'slate';
 import { Slate, Editable, withReact, ReactEditor, RenderLeafProps} from 'slate-react';
 import bold from '@/wysiwyg-assets/bold.svg';
@@ -37,7 +37,6 @@ declare module 'slate' {
 }
 
 const Wysiwyg = (props: WysiwygProps) => {
-    const editor = useMemo(() => withReact(createEditor()), [])
     const initialValue: Descendant[] = [
         {
             type: 'paragraph',
@@ -48,6 +47,8 @@ const Wysiwyg = (props: WysiwygProps) => {
 
         }
     ];
+    const [articleTxt, setArticleTxt] = useState(initialValue);
+    const editor = useMemo(() => withReact(createEditor()), []);
     const renderElement = useCallback(props => {
         switch (props.element.type) {
             default:
@@ -79,7 +80,7 @@ const Wysiwyg = (props: WysiwygProps) => {
             editor={editor} 
             value={initialValue}
             onChange={(value) => {
-                console.log(JSON.stringify(value));
+                setArticleTxt(value);        
             }}
         >
             <div
