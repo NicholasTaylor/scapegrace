@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useContext } from 'react';
 import { createEditor, BaseEditor, Descendant, Transforms, Text, Editor, Element } from 'slate';
 import { Slate, Editable, withReact, ReactEditor, RenderLeafProps} from 'slate-react';
 import bold from '@/wysiwyg-assets/bold.svg';
@@ -8,10 +8,7 @@ import italic from '@/wysiwyg-assets/italic.svg';
 import underline from '@/wysiwyg-assets/underline.svg';
 import strikethrough from '@/wysiwyg-assets/strikethrough.svg';
 import link from '@/wysiwyg-assets/link.svg';
-
-interface WysiwygProps {
-    initValue: string
-}
+import { editArticleContext } from './editArticleProvider';
 
 type CustomElement = { 
     type: 'paragraph'; 
@@ -28,6 +25,11 @@ type FormattedText = {
 
 type CustomText = FormattedText
 
+type ContextProps = [
+    Descendant[],
+    React.Dispatch<React.SetStateAction<Descendant[]>>
+]
+
 declare module 'slate' {
     interface CustomTypes {
         Editor: BaseEditor & ReactEditor
@@ -36,18 +38,8 @@ declare module 'slate' {
     }
 }
 
-const Wysiwyg = (props: WysiwygProps) => {
-    const initialValue: Descendant[] = [
-        {
-            type: 'paragraph',
-            children: [{ text: 'A cat is fine too.'}]
-            /*
-            children: [{ text: props.initValue }]
-            */
-
-        }
-    ];
-    const [articleTxt, setArticleTxt] = useState(initialValue);
+const Wysiwyg = () => {
+    let [articleTxt, setArticleTxt] = useContext(editArticleContext);
     const editor = useMemo(() => withReact(createEditor()), []);
     const renderElement = useCallback(props => {
         switch (props.element.type) {
@@ -78,9 +70,9 @@ const Wysiwyg = (props: WysiwygProps) => {
     return (
         <Slate 
             editor={editor} 
-            value={initialValue}
+            value={articleTxt as Descendant[]}
             onChange={(value) => {
-                setArticleTxt(value);        
+                setArticleTxt<React.Dispatch<React.SetStateAction<Descendant[]>>>(value);       
             }}
         >
             <div
