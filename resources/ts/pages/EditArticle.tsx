@@ -1,21 +1,31 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
-import Wysiwyg from './wysiwyg';
+import Wysiwyg from '../components/Wysiwyg';
 import 'modern-normalize';
-import EditArticleProvider from './editArticleProvider';
-import { Descendant } from 'slate';
-
-interface DataProps {
-    article?: string
-}
+import { DataProps } from '../types/Types';
+import useArticleContext, { ArticleContext, articleTxtDefault } from '../contexts/EditArticleContext';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 export default function editArticle(props: DataProps){
     const size = [.8, 1, 1.25, 1.563, 1.953, 2.441, 3.052].map((n) => `${n}rem`);
-
+    const { appState } = useContext(ArticleContext);
+    const [initValue, setInitValue] = useState(articleTxtDefault)
+    const InitSlate = () => {
+        useEffect(()=>{
+            setInitValue(appState.articleTxt)
+        },[])
+        return(
+        <ErrorBoundary>
+            <Wysiwyg
+                initValue={initValue}
+            />
+        </ErrorBoundary>
+        )
+    }
     return(
-        <EditArticleProvider 
-            dataValue={props.article!}
+        <ArticleContext.Provider
+            value={useArticleContext(Number(props.articleid))}
         >
             <div
                 css={css`
@@ -79,10 +89,10 @@ export default function editArticle(props: DataProps){
                             border: 2px dotted #808080;
                         `}
                     >
-                        <Wysiwyg />
+                        <InitSlate />
                     </div>
                 </div>
             </div>
-        </EditArticleProvider>
+        </ArticleContext.Provider>
     )
 }

@@ -56,6 +56,12 @@ class ArticleController extends Controller
         ]);
     }
 
+    public function articleJson($id)
+    {
+        return Article::where('id',$id)->get()->firstOrFail();
+        
+    }
+
     public function delete($id)
     {
         $article = Article::where('id',$id)->get();

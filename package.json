@@ -33,6 +33,7 @@
         "react-contenteditable": "^3.3.6",
         "react-dom": "^18.2.0",
         "slate": "^0.78.0",
+        "slate-history": "^0.66.0",
         "slate-react": "^0.78.1",
         "style-loader": "^2.0.0",
         "ts-loader": "^9.2.8",

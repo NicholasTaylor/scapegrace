@@ -53,7 +53,7 @@
                 </div>
                 
                 <div>
-                    <div id="editArticle" data-article="{{ $prefillHTML }}"></div>
+                    <div id="editArticle" data-articleId="{{ $article->id }}"></div>
                     <div class="wysiwyg__Modal">
                         <div class="wysiwyg__ModalLink">
                             <div class="wysiwyg__ModalLinkContainer">
@@ -142,7 +142,6 @@
         </div>
         <!-- Scripts -->
         @viteReactRefresh
-        @vite('resources/ts/editArticleIndex.tsx')
-        <script type="application/javascript" src="{{ asset('js/editArticleIndex.js') }}"></script>
+        @vite('resources/ts/EditArticleIndex.tsx')
     </body>
 </html>

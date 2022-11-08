@@ -47,4 +47,5 @@ export default defineConfig({
         host: 'localhost',
     }*/
     server: detectServerConfig(host),
+    esbuild: { jsx: 'automatic' },
 });

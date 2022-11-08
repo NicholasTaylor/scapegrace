@@ -18,6 +18,11 @@ Route::get('/admin/article', [ArticleController::class, 'index'])
     ->middleware('permission:create articles|edit articles|delete articles|publish articles|unpublish articles')
     ->name('article.index');
 
+Route::get('/admin/article/{id}', [ArticleController::class, 'articleJson'])
+    ->middleware('auth')
+    ->middleware('permission:create articles|edit articles|delete articles|publish articles|unpublish articles')
+    ->name('article.articleJson');
+
 Route::get('/admin/article/create', [ArticleController::class, 'create'])
     ->middleware('auth')
     ->middleware('permission:create articles')
