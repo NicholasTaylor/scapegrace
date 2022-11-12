@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useCallback, useContext, useRef } from 'react';
-import { createEditor, BaseEditor, Transforms, Text, Editor } from 'slate';
+import React, { useCallback, useContext, useRef, useState } from 'react';
+import { createEditor, BaseEditor, Transforms, Text, Editor, Node, Descendant } from 'slate';
 import { Slate, Editable, withReact, ReactEditor, RenderLeafProps} from 'slate-react';
 import { withHistory } from 'slate-history';
 import bold from '@/wysiwyg-assets/bold.svg';
@@ -25,6 +25,7 @@ const Wysiwyg = (props: WysiwygProps) => {
     /*let [articleTxt, setArticleTxt] = useContext(editArticleContext);*/
     
     const { appState } = useContext(ArticleContext);
+    const [testValue, setTestValue] = useState(appState.articleTxt)
 
     /*const [editor] = useState(() => withReact(createEditor()));*/
     /*const editor = useMemo(()=>withHistory(withReact(createEditor())),[appState.articleTxt])*/
@@ -58,12 +59,32 @@ const Wysiwyg = (props: WysiwygProps) => {
             )
         }
     }
-    console.log(appState.articleTxt === articleTxtDefault ? true : false)
+    const serialize = (value: Descendant[]) => {
+        value.forEach(n => console.log(`Node test:\n${JSON.stringify(Node.elements(n))}`))
+        /*console.log(`Node test:\n${Node.texts(value[0])}`)*/
+        return(
+            value.map((n: Descendant) => Node.string(n))
+            .join('\n')
+        )
+    }
+    const changeValue = (value: Descendant[]) => {
+        const isAstChange = editor.operations.some(
+            op => 'set_selection' !== op.type
+        )
+        if (isAstChange) {
+            setTestValue(value)
+        }
+    }
     return (
         <ErrorBoundary>
+            <div>
+                {serialize(testValue)}<br />
+                {JSON.stringify(testValue)}
+            </div>
             <Slate
                 editor={editor}
                 value={appState.articleTxt}
+                onChange={value => changeValue(value)}
             >
                 <div
                     className="wysiwyg__toolbar"

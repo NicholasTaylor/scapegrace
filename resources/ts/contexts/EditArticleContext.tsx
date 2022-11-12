@@ -30,11 +30,11 @@ const useArticleContext = (articleid?: number) => {
                 return res.json();
             })
             .then((data)=>{
-                setArticleTxt([{type: 'paragraph', children: [{text: `${data.body}`}]}]);
-                console.log(`Updated body with ${data.body}`)
+                /*setArticleTxt([{type: 'paragraph', children: [{text: `${data.body}`}]}]);*/
+                setArticleTxt(JSON.parse(data.body))
             })
-            .catch((err)=>{
-                console.log(err);
+            .catch((err: Error)=>{
+                console.log(err.message);
             })
         }
     }
