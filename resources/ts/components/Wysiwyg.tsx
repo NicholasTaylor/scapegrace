@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import React, { ReactNode, useCallback, useContext, useRef, useState } from 'react';
 import { createEditor, BaseEditor, Transforms, Text, Editor, Node, Descendant } from 'slate';
 import { Slate, Editable, withReact, ReactEditor, RenderLeafProps} from 'slate-react';
 import { withHistory } from 'slate-history';
@@ -12,6 +12,7 @@ import link from '@/wysiwyg-assets/link.svg';
 import { CustomElement, CustomText, WysiwygProps } from '../types/Types';
 import { ArticleContext, articleTxtDefault } from '../contexts/EditArticleContext';
 import ErrorBoundary from '../components/ErrorBoundary'
+import * as ReactDOMServer from 'react-dom/server'
 
 declare module 'slate' {
     interface CustomTypes {
@@ -60,8 +61,8 @@ const Wysiwyg = (props: WysiwygProps) => {
         }
     }
     const serialize = (value: Descendant[]) => {
-        value.forEach(n => console.log(`Node test:\n${JSON.stringify(Node.elements(n))}`))
-        /*console.log(`Node test:\n${Node.texts(value[0])}`)*/
+        /*value.forEach(n => console.log(`Node test:\n${Html.serialize(value)}`))*/
+        /*console.log(`Node test:\n${ReactDOMServer.renderToStaticMarkup(JSON.parse(JSON.stringify(value)))}`)*/
         return(
             value.map((n: Descendant) => Node.string(n))
             .join('\n')
@@ -200,8 +201,17 @@ const Wysiwyg = (props: WysiwygProps) => {
     )
 }
 
-const DefaultElement = (props: HTMLElement) => {
-    return <p {...props.attributes}>{props.children}</p>
+const DefaultElement: React.FC<React.HTMLProps<HTMLParagraphElement>> = ({
+    children, 
+    ...props
+}) => {
+    return (
+        <p
+            {...props}
+        >
+            {children}
+        </p>
+    )
 }
 
 const checkTextDecoration = (underline: boolean | undefined | null, strikethrough: boolean | undefined | null) => {
